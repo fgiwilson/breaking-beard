@@ -1,0 +1,107 @@
+generator client {
+  provider = "prisma-client"
+  output   = "../src/lib/server/generated/prisma"
+}
+
+datasource db {
+  provider = "sqlite"
+}
+
+model CarrierOil {
+  id          String   @id @default(cuid())
+  name        String   @unique
+  comedogenic Int?     // 0-5 scale
+  absorption  String?  // fast, medium, slow
+  vitamins    String?  // e.g., "A, E"
+  texture     String?  // light, medium, heavy
+  notes       String?
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+
+  formulations FormulationCarrierOil[]
+}
+
+model EssentialOil {
+  id            String   @id @default(cuid())
+  name          String   @unique
+  scentCategory String?  // citrus, woody, floral, herbal, etc.
+  safetyNotes   String?  // e.g., "phototoxic - avoid sun exposure"
+  minUsagePct   Float?   // minimum effective percentage
+  maxUsagePct   Float?   // maximum safe percentage
+  notes         String?
+  createdAt     DateTime @default(now())
+  updatedAt     DateTime @updatedAt
+
+  formulations FormulationEssentialOil[]
+  pairings     EssentialOilPairing[]     @relation("PairingFrom")
+  pairedWith   EssentialOilPairing[]     @relation("PairingTo")
+}
+
+model EssentialOilPairing {
+  id        String       @id @default(cuid())
+  oil1      EssentialOil @relation("PairingFrom", fields: [oil1Id], references: [id], onDelete: Cascade)
+  oil1Id    String
+  oil2      EssentialOil @relation("PairingTo", fields: [oil2Id], references: [id], onDelete: Cascade)
+  oil2Id    String
+  notes     String?
+  createdAt DateTime     @default(now())
+
+  @@unique([oil1Id, oil2Id])
+}
+
+model Formulation {
+  id            String   @id @default(cuid())
+  name          String
+  purpose       String?  // "morning", "evening", "all-day"
+  totalVolumeMl Float?   // target batch size
+  notes         String?
+  createdAt     DateTime @default(now())
+  updatedAt     DateTime @updatedAt
+
+  carrierOils   FormulationCarrierOil[]
+  essentialOils FormulationEssentialOil[]
+  testLogs      TestLog[]
+}
+
+model FormulationCarrierOil {
+  id            String      @id @default(cuid())
+  formulation   Formulation @relation(fields: [formulationId], references: [id], onDelete: Cascade)
+  formulationId String
+  carrierOil    CarrierOil  @relation(fields: [carrierOilId], references: [id])
+  carrierOilId  String
+  percentage    Float       // percentage of carrier base
+
+  @@unique([formulationId, carrierOilId])
+}
+
+model FormulationEssentialOil {
+  id             String       @id @default(cuid())
+  formulation    Formulation  @relation(fields: [formulationId], references: [id], onDelete: Cascade)
+  formulationId  String
+  essentialOil   EssentialOil @relation(fields: [essentialOilId], references: [id])
+  essentialOilId String
+  drops          Int?         // number of drops
+  percentage     Float?       // calculated percentage of total
+
+  @@unique([formulationId, essentialOilId])
+}
+
+model TestLog {
+  id            String      @id @default(cuid())
+  formulation   Formulation @relation(fields: [formulationId], references: [id], onDelete: Cascade)
+  formulationId String
+  date          DateTime    @default(now())
+  notes         String
+  rating        Int?        // 1-5 scale
+  createdAt     DateTime    @default(now())
+
+  @@index([formulationId, date])
+}
+
+model DiaryEntry {
+  id        String   @id @default(cuid())
+  title     String?
+  content   String
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
