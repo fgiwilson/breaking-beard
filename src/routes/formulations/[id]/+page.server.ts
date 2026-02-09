@@ -90,8 +90,9 @@ export const actions: Actions = {
 	},
 
 	updateOils: async ({ request, params }) => {
-		const body = await request.json();
-		const { carrierOils, essentialOils } = body;
+		const formData = await request.formData();
+		const carrierOils = JSON.parse(formData.get('carrierOils')?.toString() ?? '[]');
+		const essentialOils = JSON.parse(formData.get('essentialOils')?.toString() ?? '[]');
 
 		// Update carrier oils - delete existing and recreate
 		await db.formulationCarrierOil.deleteMany({

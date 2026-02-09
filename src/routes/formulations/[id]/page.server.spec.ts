@@ -6,8 +6,7 @@ import {
 	seedCarrierOil,
 	seedEssentialOil,
 	seedTestLog,
-	mockFormDataRequest,
-	mockJsonRequest
+	mockFormDataRequest
 } from '$lib/server/test-helpers';
 
 let testDb: PrismaClient;
@@ -203,9 +202,9 @@ describe('Formulation updateOils action', () => {
 		const { actions } = await import('./+page.server');
 		// Replace with carrier2
 		await actions.updateOils({
-			request: mockJsonRequest({
-				carrierOils: [{ id: carrier2.id, percentage: 70 }],
-				essentialOils: []
+			request: mockFormDataRequest({
+				carrierOils: JSON.stringify([{ id: carrier2.id, percentage: 70 }]),
+				essentialOils: JSON.stringify([])
 			}),
 			params: { id: formula.id }
 		} as any);
@@ -224,9 +223,9 @@ describe('Formulation updateOils action', () => {
 
 		const { actions } = await import('./+page.server');
 		await actions.updateOils({
-			request: mockJsonRequest({
-				carrierOils: [],
-				essentialOils: [{ id: essential.id, drops: 6 }]
+			request: mockFormDataRequest({
+				carrierOils: JSON.stringify([]),
+				essentialOils: JSON.stringify([{ id: essential.id, drops: 6 }])
 			}),
 			params: { id: formula.id }
 		} as any);
@@ -246,9 +245,9 @@ describe('Formulation updateOils action', () => {
 
 		const { actions } = await import('./+page.server');
 		await actions.updateOils({
-			request: mockJsonRequest({
-				carrierOils: [],
-				essentialOils: [{ id: essential.id, drops: 6 }]
+			request: mockFormDataRequest({
+				carrierOils: JSON.stringify([]),
+				essentialOils: JSON.stringify([{ id: essential.id, drops: 6 }])
 			}),
 			params: { id: formula.id }
 		} as any);
@@ -266,12 +265,12 @@ describe('Formulation updateOils action', () => {
 
 		const { actions } = await import('./+page.server');
 		await actions.updateOils({
-			request: mockJsonRequest({
-				carrierOils: [],
-				essentialOils: [
+			request: mockFormDataRequest({
+				carrierOils: JSON.stringify([]),
+				essentialOils: JSON.stringify([
 					{ id: eo1.id, drops: 3 },
 					{ id: eo2.id, drops: 0 } // should be filtered out
-				]
+				])
 			}),
 			params: { id: formula.id }
 		} as any);
@@ -297,7 +296,10 @@ describe('Formulation updateOils action', () => {
 
 		const { actions } = await import('./+page.server');
 		await actions.updateOils({
-			request: mockJsonRequest({ carrierOils: [], essentialOils: [] }),
+			request: mockFormDataRequest({
+				carrierOils: JSON.stringify([]),
+				essentialOils: JSON.stringify([])
+			}),
 			params: { id: formula.id }
 		} as any);
 
@@ -320,7 +322,10 @@ describe('Formulation updateOils action', () => {
 
 		const { actions } = await import('./+page.server');
 		await actions.updateOils({
-			request: mockJsonRequest({ carrierOils: [], essentialOils: [] }),
+			request: mockFormDataRequest({
+				carrierOils: JSON.stringify([]),
+				essentialOils: JSON.stringify([])
+			}),
 			params: { id: formula.id }
 		} as any);
 

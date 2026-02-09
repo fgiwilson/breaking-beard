@@ -112,13 +112,13 @@
 	}
 
 	async function saveOils() {
+		const formData = new FormData();
+		formData.append('carrierOils', JSON.stringify(selectedCarriers));
+		formData.append('essentialOils', JSON.stringify(selectedEssentials));
+
 		const response = await fetch(`/formulations/${data.formulation.id}?/updateOils`, {
 			method: 'POST',
-			headers: { 'Content-Type': 'application/json' },
-			body: JSON.stringify({
-				carrierOils: selectedCarriers,
-				essentialOils: selectedEssentials
-			})
+			body: formData
 		});
 
 		if (response.ok) {
