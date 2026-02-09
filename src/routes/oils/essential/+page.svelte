@@ -141,32 +141,30 @@
 
 					<div class="grid grid-cols-2 gap-4">
 						<div>
-							<label for="minUsagePct" class="mb-1 block text-sm font-medium text-leather-800">
-								Min Usage %
+							<label for="minDrops" class="mb-1 block text-sm font-medium text-leather-800">
+								Min Drops
 							</label>
 							<input
 								type="number"
-								id="minUsagePct"
-								name="minUsagePct"
-								step="0.1"
+								id="minDrops"
+								name="minDrops"
+								step="1"
 								min="0"
-								max="100"
-								value={editingOil?.minUsagePct ?? ''}
+								value={editingOil?.minDrops ?? ''}
 								class="w-full"
 							/>
 						</div>
 						<div>
-							<label for="maxUsagePct" class="mb-1 block text-sm font-medium text-leather-800">
-								Max Usage %
+							<label for="maxDrops" class="mb-1 block text-sm font-medium text-leather-800">
+								Max Drops
 							</label>
 							<input
 								type="number"
-								id="maxUsagePct"
-								name="maxUsagePct"
-								step="0.1"
+								id="maxDrops"
+								name="maxDrops"
+								step="1"
 								min="0"
-								max="100"
-								value={editingOil?.maxUsagePct ?? ''}
+								value={editingOil?.maxDrops ?? ''}
 								class="w-full"
 							/>
 						</div>
@@ -374,10 +372,10 @@
 						</div>
 					</div>
 
-					{#if oil.minUsagePct !== null || oil.maxUsagePct !== null}
+					{#if oil.minDrops !== null || oil.maxDrops !== null}
 						<p class="mt-2 text-xs text-amber-600">
-							<span class="font-medium">Usage:</span>
-							{oil.minUsagePct ?? 0}% - {oil.maxUsagePct ?? '?'}%
+							<span class="font-medium">Drops (per 30ml):</span>
+							{oil.minDrops ?? 0} - {oil.maxDrops ?? '?'}
 						</p>
 					{/if}
 

@@ -81,8 +81,8 @@ model EssentialOil {
   name          String   @unique
   scentCategory String?  // citrus, woody, floral, herbal, spicy, resinous, earthy
   safetyNotes   String?  // e.g., "phototoxic - avoid sun exposure"
-  minUsagePct   Float?   // minimum effective percentage
-  maxUsagePct   Float?   // maximum safe percentage
+  minDrops      Int?     // minimum drops per 30ml batch
+  maxDrops      Int?     // maximum drops per 30ml batch
   notes         String?
   createdAt     DateTime @default(now())
   updatedAt     DateTime @updatedAt

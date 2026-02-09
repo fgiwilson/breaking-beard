@@ -70,8 +70,8 @@ describe('Essential oils create action', () => {
 				name: 'Bergamot',
 				scentCategory: 'citrus',
 				safetyNotes: 'phototoxic',
-				minUsagePct: '0.5',
-				maxUsagePct: '2.0',
+				minDrops: '1',
+				maxDrops: '6',
 				notes: 'Best oil'
 			})
 		} as any);
@@ -80,8 +80,8 @@ describe('Essential oils create action', () => {
 
 		const oil = await testDb.essentialOil.findUnique({ where: { name: 'Bergamot' } });
 		expect(oil!.scentCategory).toBe('citrus');
-		expect(oil!.minUsagePct).toBe(0.5);
-		expect(oil!.maxUsagePct).toBe(2.0);
+		expect(oil!.minDrops).toBe(1);
+		expect(oil!.maxDrops).toBe(6);
 	});
 
 	it('fails when name is missing', async () => {

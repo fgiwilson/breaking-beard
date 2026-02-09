@@ -35,16 +35,16 @@ async function main() {
 			name: 'Eucalyptus',
 			scentCategory: 'herbal',
 			safetyNotes: 'Avoid if asthmatic. Keep away from face in high concentrations.',
-			minUsagePct: 0.5,
-			maxUsagePct: 2,
+			minDrops: 1,
+			maxDrops: 6,
 			notes: 'Clean, medicinal scent. Great for morning blends. Adds freshness and opens airways.'
 		},
 		{
 			name: 'Bergamot',
 			scentCategory: 'citrus',
 			safetyNotes: 'Phototoxic - avoid sun exposure for 12-18 hours after application.',
-			minUsagePct: 0.5,
-			maxUsagePct: 2,
+			minDrops: 1,
+			maxDrops: 6,
 			notes:
 				'Favorite citrus! Sophisticated, not sharp. Bergamot-forward blends are the goal. Pairs beautifully with woody and herbal notes.'
 		},
@@ -52,8 +52,8 @@ async function main() {
 			name: 'Lemongrass',
 			scentCategory: 'citrus',
 			safetyNotes: 'Can cause skin sensitization. Use at low concentrations.',
-			minUsagePct: 0.25,
-			maxUsagePct: 1,
+			minDrops: 1,
+			maxDrops: 3,
 			notes:
 				'Bright and grassy. Can be overpowering - use sparingly. Good supporting note but not as a primary scent.'
 		},
@@ -61,8 +61,8 @@ async function main() {
 			name: 'Cypress',
 			scentCategory: 'woody',
 			safetyNotes: null,
-			minUsagePct: 0.5,
-			maxUsagePct: 2,
+			minDrops: 1,
+			maxDrops: 6,
 			notes:
 				'Fresh, clean woody scent. Not as heavy as cedar. Great for morning blends. Pairs perfectly with bergamot.'
 		},
@@ -70,8 +70,8 @@ async function main() {
 			name: 'Lavender',
 			scentCategory: 'floral',
 			safetyNotes: null,
-			minUsagePct: 0.5,
-			maxUsagePct: 2,
+			minDrops: 1,
+			maxDrops: 6,
 			notes:
 				'Versatile and calming. Works in both morning and evening blends. Classic choice for a reason. Balances other scents well.'
 		},
@@ -79,8 +79,8 @@ async function main() {
 			name: 'Spearmint',
 			scentCategory: 'herbal',
 			safetyNotes: 'Avoid during pregnancy in high doses.',
-			minUsagePct: 0.5,
-			maxUsagePct: 2,
+			minDrops: 1,
+			maxDrops: 6,
 			notes:
 				'Softer than peppermint. Fresh and uplifting. Great for morning "clean air fresh" blends with lavender and eucalyptus.'
 		},
@@ -88,8 +88,8 @@ async function main() {
 			name: 'Frankincense',
 			scentCategory: 'resinous',
 			safetyNotes: null,
-			minUsagePct: 0.5,
-			maxUsagePct: 2,
+			minDrops: 1,
+			maxDrops: 6,
 			notes:
 				'Warm, resinous, slightly sweet. Grounding scent perfect for evening blends. Ancient and sophisticated.'
 		},
@@ -97,8 +97,8 @@ async function main() {
 			name: 'Cedarwood',
 			scentCategory: 'woody',
 			safetyNotes: null,
-			minUsagePct: 0.5,
-			maxUsagePct: 2,
+			minDrops: 1,
+			maxDrops: 6,
 			notes:
 				'Classic masculine woody scent. Currently exploring alternatives - can be too heavy/dominant. Good grounding note but needs balance.'
 		},
@@ -106,8 +106,8 @@ async function main() {
 			name: 'Black Pepper',
 			scentCategory: 'spicy',
 			safetyNotes: 'Can cause skin irritation at high concentrations.',
-			minUsagePct: 0.25,
-			maxUsagePct: 1,
+			minDrops: 1,
+			maxDrops: 3,
 			notes:
 				'Warm and spicy. Use very sparingly - a little goes a long way. Adds interesting depth to citrus-woody blends.'
 		}

@@ -18,8 +18,8 @@ CREATE TABLE "EssentialOil" (
     "name" TEXT NOT NULL,
     "scentCategory" TEXT,
     "safetyNotes" TEXT,
-    "minUsagePct" REAL,
-    "maxUsagePct" REAL,
+    "minDrops" INTEGER,
+    "maxDrops" INTEGER,
     "notes" TEXT,
     "createdAt" DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
     "updatedAt" DATETIME NOT NULL
@@ -130,8 +130,8 @@ export async function seedEssentialOil(
 		name: string;
 		scentCategory: string;
 		safetyNotes: string;
-		minUsagePct: number;
-		maxUsagePct: number;
+		minDrops: number;
+		maxDrops: number;
 		notes: string;
 	}> = {}
 ) {
@@ -140,8 +140,8 @@ export async function seedEssentialOil(
 			name: overrides.name ?? `Essential ${Date.now()}-${Math.random().toString(36).slice(2, 6)}`,
 			scentCategory: overrides.scentCategory ?? null,
 			safetyNotes: overrides.safetyNotes ?? null,
-			minUsagePct: overrides.minUsagePct ?? null,
-			maxUsagePct: overrides.maxUsagePct ?? null,
+			minDrops: overrides.minDrops ?? null,
+			maxDrops: overrides.maxDrops ?? null,
 			notes: overrides.notes ?? null
 		}
 	});

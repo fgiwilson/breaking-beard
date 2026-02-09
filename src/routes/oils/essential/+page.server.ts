@@ -25,8 +25,8 @@ export const actions: Actions = {
 		const name = formData.get('name')?.toString().trim();
 		const scentCategory = formData.get('scentCategory')?.toString();
 		const safetyNotes = formData.get('safetyNotes')?.toString().trim();
-		const minUsagePct = formData.get('minUsagePct')?.toString();
-		const maxUsagePct = formData.get('maxUsagePct')?.toString();
+		const minDrops = formData.get('minDrops')?.toString();
+		const maxDrops = formData.get('maxDrops')?.toString();
 		const notes = formData.get('notes')?.toString().trim();
 
 		if (!name) {
@@ -39,8 +39,8 @@ export const actions: Actions = {
 					name,
 					scentCategory: scentCategory || null,
 					safetyNotes: safetyNotes || null,
-					minUsagePct: minUsagePct ? parseFloat(minUsagePct) : null,
-					maxUsagePct: maxUsagePct ? parseFloat(maxUsagePct) : null,
+					minDrops: minDrops ? parseInt(minDrops) : null,
+					maxDrops: maxDrops ? parseInt(maxDrops) : null,
 					notes: notes || null
 				}
 			});
@@ -60,8 +60,8 @@ export const actions: Actions = {
 		const name = formData.get('name')?.toString().trim();
 		const scentCategory = formData.get('scentCategory')?.toString();
 		const safetyNotes = formData.get('safetyNotes')?.toString().trim();
-		const minUsagePct = formData.get('minUsagePct')?.toString();
-		const maxUsagePct = formData.get('maxUsagePct')?.toString();
+		const minDrops = formData.get('minDrops')?.toString();
+		const maxDrops = formData.get('maxDrops')?.toString();
 		const notes = formData.get('notes')?.toString().trim();
 
 		if (!id || !name) {
@@ -75,8 +75,8 @@ export const actions: Actions = {
 					name,
 					scentCategory: scentCategory || null,
 					safetyNotes: safetyNotes || null,
-					minUsagePct: minUsagePct ? parseFloat(minUsagePct) : null,
-					maxUsagePct: maxUsagePct ? parseFloat(maxUsagePct) : null,
+					minDrops: minDrops ? parseInt(minDrops) : null,
+					maxDrops: maxDrops ? parseInt(maxDrops) : null,
 					notes: notes || null
 				}
 			});
