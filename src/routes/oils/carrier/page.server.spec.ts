@@ -26,7 +26,7 @@ afterEach(async () => {
 describe('Carrier oils load', () => {
 	it('returns empty list when no oils exist', async () => {
 		const { load } = await import('./+page.server');
-		const result = await load({} as any);
+		const result = (await load({} as any))!;
 
 		expect(result.oils).toEqual([]);
 	});
@@ -37,7 +37,7 @@ describe('Carrier oils load', () => {
 		await seedCarrierOil(testDb, { name: 'Jojoba' });
 
 		const { load } = await import('./+page.server');
-		const result = await load({} as any);
+		const result = (await load({} as any))!;
 
 		expect(result.oils.map((o: any) => o.name)).toEqual(['Argan', 'Jojoba', 'Sweet Almond']);
 	});
@@ -50,7 +50,7 @@ describe('Carrier oils load', () => {
 		});
 
 		const { load } = await import('./+page.server');
-		const result = await load({} as any);
+		const result = (await load({} as any))!;
 
 		expect(result.oils[0]._count.formulations).toBe(1);
 	});

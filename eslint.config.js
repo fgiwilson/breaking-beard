@@ -26,6 +26,12 @@ export default defineConfig(
 		}
 	},
 	{
+		files: ['**/*.spec.ts', '**/*.test.ts', '**/*.spec.js', '**/*.test.js'],
+		rules: {
+			'@typescript-eslint/no-explicit-any': 'off'
+		}
+	},
+	{
 		files: ['**/*.svelte', '**/*.svelte.ts', '**/*.svelte.js'],
 		languageOptions: {
 			parserOptions: {

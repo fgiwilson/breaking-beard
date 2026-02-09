@@ -50,7 +50,7 @@ describe('Formulation detail load', () => {
 		await seedTestLog(testDb, formula.id, { notes: 'Smells great', rating: 4 });
 
 		const { load } = await import('./+page.server');
-		const result = await load({ params: { id: formula.id } } as any);
+		const result = (await load({ params: { id: formula.id } } as any))!;
 
 		expect(result.formulation.name).toBe('Morning Blend');
 		expect(result.formulation.carrierOils).toHaveLength(1);
@@ -78,7 +78,7 @@ describe('Formulation detail load', () => {
 		});
 
 		const { load } = await import('./+page.server');
-		const result = await load({ params: { id: formula.id } } as any);
+		const result = (await load({ params: { id: formula.id } } as any))!;
 
 		expect(result.formulation.testLogs[0].notes).toBe('New');
 		expect(result.formulation.testLogs[1].notes).toBe('Old');
@@ -357,14 +357,10 @@ describe('Formulation delete action', () => {
 		expect(
 			await testDb.formulationEssentialOil.findMany({ where: { formulationId: formula.id } })
 		).toHaveLength(0);
-		expect(
-			await testDb.testLog.findMany({ where: { formulationId: formula.id } })
-		).toHaveLength(0);
+		expect(await testDb.testLog.findMany({ where: { formulationId: formula.id } })).toHaveLength(0);
 
 		// But the oils themselves still exist
 		expect(await testDb.carrierOil.findUnique({ where: { id: carrier.id } })).not.toBeNull();
-		expect(
-			await testDb.essentialOil.findUnique({ where: { id: essential.id } })
-		).not.toBeNull();
+		expect(await testDb.essentialOil.findUnique({ where: { id: essential.id } })).not.toBeNull();
 	});
 });

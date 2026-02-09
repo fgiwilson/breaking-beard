@@ -28,7 +28,7 @@ afterEach(async () => {
 describe('Dashboard load', () => {
 	it('returns empty state when database is empty', async () => {
 		const { load } = await import('./+page.server');
-		const result = await load({} as any);
+		const result = (await load({} as any))!;
 
 		expect(result.formulations).toEqual([]);
 		expect(result.recentTestLogs).toEqual([]);
@@ -41,7 +41,7 @@ describe('Dashboard load', () => {
 		await seedCarrierOil(testDb, { name: 'Sweet Almond' });
 
 		const { load } = await import('./+page.server');
-		const result = await load({} as any);
+		const result = (await load({} as any))!;
 
 		expect(result.stats.carrierOils).toBe(2);
 	});
@@ -52,7 +52,7 @@ describe('Dashboard load', () => {
 		await seedEssentialOil(testDb, { name: 'Cypress' });
 
 		const { load } = await import('./+page.server');
-		const result = await load({} as any);
+		const result = (await load({} as any))!;
 
 		expect(result.stats.essentialOils).toBe(3);
 	});
@@ -63,7 +63,7 @@ describe('Dashboard load', () => {
 		}
 
 		const { load } = await import('./+page.server');
-		const result = await load({} as any);
+		const result = (await load({} as any))!;
 
 		expect(result.formulations).toHaveLength(5);
 	});
@@ -74,7 +74,7 @@ describe('Dashboard load', () => {
 		}
 
 		const { load } = await import('./+page.server');
-		const result = await load({} as any);
+		const result = (await load({} as any))!;
 
 		// This documents the current behavior: stats.formulations uses
 		// formulations.length (capped at 5) rather than a separate count query
@@ -88,7 +88,7 @@ describe('Dashboard load', () => {
 		}
 
 		const { load } = await import('./+page.server');
-		const result = await load({} as any);
+		const result = (await load({} as any))!;
 
 		expect(result.recentTestLogs).toHaveLength(5);
 	});
@@ -99,7 +99,7 @@ describe('Dashboard load', () => {
 		}
 
 		const { load } = await import('./+page.server');
-		const result = await load({} as any);
+		const result = (await load({} as any))!;
 
 		expect(result.diaryEntries).toHaveLength(3);
 	});
@@ -117,7 +117,7 @@ describe('Dashboard load', () => {
 		});
 
 		const { load } = await import('./+page.server');
-		const result = await load({} as any);
+		const result = (await load({} as any))!;
 
 		expect(result.formulations[0].carrierOils).toHaveLength(1);
 		expect(result.formulations[0].carrierOils[0].carrierOil.name).toBe('Jojoba');

@@ -137,8 +137,7 @@ export async function seedEssentialOil(
 ) {
 	return db.essentialOil.create({
 		data: {
-			name:
-				overrides.name ?? `Essential ${Date.now()}-${Math.random().toString(36).slice(2, 6)}`,
+			name: overrides.name ?? `Essential ${Date.now()}-${Math.random().toString(36).slice(2, 6)}`,
 			scentCategory: overrides.scentCategory ?? null,
 			safetyNotes: overrides.safetyNotes ?? null,
 			minUsagePct: overrides.minUsagePct ?? null,
@@ -159,8 +158,7 @@ export async function seedFormulation(
 ) {
 	return db.formulation.create({
 		data: {
-			name:
-				overrides.name ?? `Formula ${Date.now()}-${Math.random().toString(36).slice(2, 6)}`,
+			name: overrides.name ?? `Formula ${Date.now()}-${Math.random().toString(36).slice(2, 6)}`,
 			purpose: overrides.purpose ?? null,
 			totalVolumeMl: overrides.totalVolumeMl ?? null,
 			notes: overrides.notes ?? null

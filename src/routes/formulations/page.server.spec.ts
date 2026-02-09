@@ -28,7 +28,7 @@ afterEach(async () => {
 describe('Formulations list load', () => {
 	it('returns empty list', async () => {
 		const { load } = await import('./+page.server');
-		const result = await load({ url: mockUrl() } as any);
+		const result = (await load({ url: mockUrl() } as any))!;
 
 		expect(result.formulations).toEqual([]);
 		expect(result.filter).toBeNull();
@@ -48,7 +48,7 @@ describe('Formulations list load', () => {
 		await seedTestLog(testDb, formula.id);
 
 		const { load } = await import('./+page.server');
-		const result = await load({ url: mockUrl() } as any);
+		const result = (await load({ url: mockUrl() } as any))!;
 
 		expect(result.formulations).toHaveLength(1);
 		expect(result.formulations[0].carrierOils).toHaveLength(1);
@@ -61,7 +61,7 @@ describe('Formulations list load', () => {
 		await seedFormulation(testDb, { name: 'Evening', purpose: 'evening' });
 
 		const { load } = await import('./+page.server');
-		const result = await load({ url: mockUrl({ purpose: 'morning' }) } as any);
+		const result = (await load({ url: mockUrl({ purpose: 'morning' }) } as any))!;
 
 		expect(result.formulations).toHaveLength(1);
 		expect(result.formulations[0].name).toBe('Morning');
@@ -73,7 +73,7 @@ describe('Formulations list load', () => {
 		await seedFormulation(testDb, { name: 'Evening', purpose: 'evening' });
 
 		const { load } = await import('./+page.server');
-		const result = await load({ url: mockUrl() } as any);
+		const result = (await load({ url: mockUrl() } as any))!;
 
 		expect(result.formulations).toHaveLength(2);
 	});
@@ -94,7 +94,7 @@ describe('Formulations list load', () => {
 		});
 
 		const { load } = await import('./+page.server');
-		const result = await load({ url: mockUrl() } as any);
+		const result = (await load({ url: mockUrl() } as any))!;
 
 		expect(result.formulations[0].name).toBe('Newer');
 		expect(result.formulations[1].name).toBe('Older');

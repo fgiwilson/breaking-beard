@@ -1,10 +1,6 @@
 import { describe, it, expect, vi, beforeEach, afterEach } from 'vitest';
 import type { PrismaClient } from '$lib/server/generated/prisma/client';
-import {
-	createTestDb,
-	seedCarrierOil,
-	seedEssentialOil
-} from '$lib/server/test-helpers';
+import { createTestDb, seedCarrierOil, seedEssentialOil } from '$lib/server/test-helpers';
 
 let testDb: PrismaClient;
 
@@ -31,7 +27,7 @@ describe('New formulation load', () => {
 		await seedEssentialOil(testDb, { name: 'Cypress' });
 
 		const { load } = await import('./+page.server');
-		const result = await load({} as any);
+		const result = (await load({} as any))!;
 
 		expect(result.carrierOils).toHaveLength(2);
 		expect(result.essentialOils).toHaveLength(3);
@@ -39,7 +35,7 @@ describe('New formulation load', () => {
 
 	it('returns empty arrays when no oils exist', async () => {
 		const { load } = await import('./+page.server');
-		const result = await load({} as any);
+		const result = (await load({} as any))!;
 
 		expect(result.carrierOils).toEqual([]);
 		expect(result.essentialOils).toEqual([]);

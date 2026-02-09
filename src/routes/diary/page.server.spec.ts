@@ -21,7 +21,7 @@ afterEach(async () => {
 describe('Diary load', () => {
 	it('returns empty list', async () => {
 		const { load } = await import('./+page.server');
-		const result = await load({} as any);
+		const result = (await load({} as any))!;
 
 		expect(result.entries).toEqual([]);
 	});
@@ -32,7 +32,7 @@ describe('Diary load', () => {
 		await seedDiaryEntry(testDb, { content: 'Second' });
 
 		const { load } = await import('./+page.server');
-		const result = await load({} as any);
+		const result = (await load({} as any))!;
 
 		expect(result.entries).toHaveLength(2);
 		// Most recent first

@@ -26,7 +26,7 @@ afterEach(async () => {
 describe('Essential oils load', () => {
 	it('returns empty list when no oils exist', async () => {
 		const { load } = await import('./+page.server');
-		const result = await load({} as any);
+		const result = (await load({} as any))!;
 
 		expect(result.oils).toEqual([]);
 	});
@@ -39,7 +39,7 @@ describe('Essential oils load', () => {
 		});
 
 		const { load } = await import('./+page.server');
-		const result = await load({} as any);
+		const result = (await load({} as any))!;
 
 		expect(result.oils).toHaveLength(2);
 		expect(result.oils[0].name).toBe('Bergamot');
@@ -56,7 +56,7 @@ describe('Essential oils load', () => {
 		});
 
 		const { load } = await import('./+page.server');
-		const result = await load({} as any);
+		const result = (await load({} as any))!;
 
 		expect(result.oils[0]._count.formulations).toBe(1);
 	});
