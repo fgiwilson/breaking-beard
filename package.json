@@ -20,7 +20,8 @@
 		"db:seed": "bun prisma/seed.ts",
 		"db:reset": "bunx prisma migrate reset --force && bun prisma/seed.ts",
 		"db:studio": "bunx prisma studio",
-		"postinstall": "prisma generate"
+		"postinstall": "prisma generate",
+		"preinstall": "npm run prepare"
 	},
 	"devDependencies": {
 		"@eslint/compat": "^2.0.2",
