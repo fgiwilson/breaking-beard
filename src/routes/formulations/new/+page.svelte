@@ -87,29 +87,35 @@
 			floral: 'badge-floral',
 			spicy: 'badge-spicy',
 			earthy: 'badge-earthy',
-			resinous: 'bg-amber-700 text-white'
+			resinous: 'badge-resinous'
 		};
-		return map[category?.toLowerCase() ?? ''] ?? 'bg-amber-200 text-leather-800';
+		return map[category?.toLowerCase() ?? ''] ?? 'bg-ink-500 text-parchment-400';
 	}
 </script>
 
 <div class="space-y-6">
 	<div>
-		<a href={resolve('/formulations')} class="text-sm text-amber-600 hover:text-amber-700"
+		<a
+			href={resolve('/formulations')}
+			class="font-display text-sm text-amber-600 transition hover:text-amber-400"
 			>&larr; Back</a
 		>
-		<h1 class="mt-2 font-display text-2xl font-bold text-leather-900">New Formula</h1>
-		<p class="mt-1 text-sm text-amber-700">Create a new beard oil blend</p>
+		<h1 class="mt-2 font-display text-2xl font-bold tracking-wide text-parchment-200">
+			New Formula
+		</h1>
+		<p class="mt-1 font-display text-sm italic text-parchment-600">
+			Create a new beard oil blend
+		</p>
 	</div>
 
 	<form onsubmit={handleSubmit} class="space-y-6">
 		<!-- Basic Info -->
-		<div class="card-glass rounded-xl p-4">
-			<h2 class="mb-4 font-display text-lg font-semibold text-leather-900">Basic Info</h2>
+		<div class="v-card p-5">
+			<h2 class="mb-4 font-display text-lg font-semibold text-parchment-200">Basic Info</h2>
 
 			<div class="grid gap-4 sm:grid-cols-2">
 				<div class="sm:col-span-2">
-					<label for="name" class="mb-1 block text-sm font-medium text-leather-800">
+					<label for="name" class="mb-1 block text-sm font-medium text-parchment-400">
 						Formula Name
 					</label>
 					<input
@@ -123,7 +129,7 @@
 				</div>
 
 				<div>
-					<label for="purpose" class="mb-1 block text-sm font-medium text-leather-800">
+					<label for="purpose" class="mb-1 block text-sm font-medium text-parchment-400">
 						Purpose
 					</label>
 					<select id="purpose" bind:value={purpose} class="w-full">
@@ -135,7 +141,7 @@
 				</div>
 
 				<div>
-					<label for="volume" class="mb-1 block text-sm font-medium text-leather-800">
+					<label for="volume" class="mb-1 block text-sm font-medium text-parchment-400">
 						Batch Size (ml)
 					</label>
 					<input
@@ -149,7 +155,9 @@
 				</div>
 
 				<div class="sm:col-span-2">
-					<label for="notes" class="mb-1 block text-sm font-medium text-leather-800">Notes</label>
+					<label for="notes" class="mb-1 block text-sm font-medium text-parchment-400"
+						>Notes</label
+					>
 					<textarea
 						id="notes"
 						bind:value={notes}
@@ -162,13 +170,13 @@
 		</div>
 
 		<!-- Carrier Oils -->
-		<div class="card-glass rounded-xl p-4">
+		<div class="v-card p-5">
 			<div class="mb-4 flex items-center justify-between">
-				<h2 class="font-display text-lg font-semibold text-leather-900">Carrier Oils</h2>
+				<h2 class="font-display text-lg font-semibold text-parchment-200">Carrier Oils</h2>
 				<span
 					class="text-sm font-medium"
-					class:text-green-600={totalCarrierPct === 100}
-					class:text-amber-600={totalCarrierPct !== 100}
+					class:text-sage-300={totalCarrierPct === 100}
+					class:text-parchment-600={totalCarrierPct !== 100}
 				>
 					{totalCarrierPct}%
 				</span>
@@ -177,8 +185,8 @@
 			{#if selectedCarriers.length > 0}
 				<div class="mb-4 space-y-2">
 					{#each selectedCarriers as carrier, i (carrier.id)}
-						<div class="flex items-center gap-3 rounded-lg bg-amber-50 p-2">
-							<span class="flex-1 text-sm font-medium text-leather-800">
+						<div class="flex items-center gap-3 rounded-lg bg-ink-600 p-2">
+							<span class="flex-1 text-sm font-medium text-parchment-300">
 								{getCarrierName(carrier.id)}
 							</span>
 							<input
@@ -188,21 +196,14 @@
 								max="100"
 								class="w-20 text-center text-sm"
 							/>
-							<span class="text-sm text-amber-600">%</span>
+							<span class="text-sm text-parchment-600">%</span>
 							<button
 								type="button"
 								onclick={() => removeCarrier(carrier.id)}
-								class="text-red-400 hover:text-red-600"
+								class="text-red-400 hover:text-red-300"
 								aria-label="Remove {getCarrierName(carrier.id)}"
 							>
-								<svg class="h-4 w-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-									<path
-										stroke-linecap="round"
-										stroke-linejoin="round"
-										stroke-width="2"
-										d="M6 18L18 6M6 6l12 12"
-									/>
-								</svg>
+								<i class="fa-sharp fa-solid fa-xmark"></i>
 							</button>
 						</div>
 					{/each}
@@ -214,7 +215,7 @@
 					<button
 						type="button"
 						onclick={() => addCarrier(oil.id)}
-						class="rounded-full bg-amber-100 px-3 py-1 text-sm text-amber-700 transition hover:bg-amber-200"
+						class="scoop-sm bg-ink-600 px-3 py-1 text-sm text-parchment-500 transition hover:bg-ink-500 hover:text-amber-400"
 					>
 						+ {oil.name}
 					</button>
@@ -222,18 +223,20 @@
 			</div>
 
 			{#if totalCarrierPct !== 100 && selectedCarriers.length > 0}
-				<p class="mt-2 text-xs text-amber-600">Tip: Carrier percentages should total 100%</p>
+				<p class="mt-2 text-xs text-parchment-600">
+					Tip: Carrier percentages should total 100%
+				</p>
 			{/if}
 		</div>
 
 		<!-- Essential Oils -->
-		<div class="card-glass rounded-xl p-4">
-			<h2 class="mb-4 font-display text-lg font-semibold text-leather-900">Essential Oils</h2>
+		<div class="v-card p-5">
+			<h2 class="mb-4 font-display text-lg font-semibold text-parchment-200">Essential Oils</h2>
 
 			{#if selectedEssentials.length > 0}
 				<div class="mb-4 space-y-2">
 					{#each selectedEssentials as essential, i (essential.id)}
-						<div class="flex items-center gap-3 rounded-lg bg-amber-50 p-2">
+						<div class="flex items-center gap-3 rounded-lg bg-ink-600 p-2">
 							<span
 								class="rounded-full px-2 py-0.5 text-xs font-medium {getScentBadgeClass(
 									getScentCategory(essential.id)
@@ -241,7 +244,7 @@
 							>
 								{getScentCategory(essential.id) || 'other'}
 							</span>
-							<span class="flex-1 text-sm font-medium text-leather-800">
+							<span class="flex-1 text-sm font-medium text-parchment-300">
 								{getEssentialName(essential.id)}
 							</span>
 							<input
@@ -251,21 +254,14 @@
 								max="20"
 								class="w-16 text-center text-sm"
 							/>
-							<span class="text-sm text-amber-600">drops</span>
+							<span class="text-sm text-parchment-600">drops</span>
 							<button
 								type="button"
 								onclick={() => removeEssential(essential.id)}
-								class="text-red-400 hover:text-red-600"
+								class="text-red-400 hover:text-red-300"
 								aria-label="Remove {getEssentialName(essential.id)}"
 							>
-								<svg class="h-4 w-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-									<path
-										stroke-linecap="round"
-										stroke-linejoin="round"
-										stroke-width="2"
-										d="M6 18L18 6M6 6l12 12"
-									/>
-								</svg>
+								<i class="fa-sharp fa-solid fa-xmark"></i>
 							</button>
 						</div>
 					{/each}
@@ -286,7 +282,7 @@
 				{/each}
 			</div>
 
-			<p class="mt-3 text-xs text-amber-600">
+			<p class="mt-3 text-xs text-parchment-600">
 				Tip: For a 30ml bottle, 6-9 drops total gives ~1% dilution (safe for face)
 			</p>
 		</div>
@@ -300,12 +296,7 @@
 			>
 				{isSubmitting ? 'Creating...' : 'Create Formula'}
 			</button>
-			<a
-				href={resolve('/formulations')}
-				class="flex-1 rounded-md border border-amber-300 px-4 py-2 text-center text-sm font-medium text-leather-700 transition hover:bg-amber-50"
-			>
-				Cancel
-			</a>
+			<a href={resolve('/formulations')} class="btn-outline flex-1 text-center">Cancel</a>
 		</div>
 	</form>
 </div>

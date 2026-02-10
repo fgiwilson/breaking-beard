@@ -40,13 +40,13 @@ This app is built for a methodical approach to beard oil formulation development
 Current formulation work includes:
 
 - **Morning blend (refined citrus-woody)**: bergamot, cypress, black pepper
-- **Morning blend (clean air fresh)**: lavender, bergamot, eucalyptus, spearmint
+- **Morning blend (clean air fresh)**: lavender, bergamot, eucalyptus
 - **Evening blend (grounding)**: cedarwood, lavender, frankincense (exploring cedarwood alternatives)
 
 Current oil inventory:
 
-- **Carriers**: jojoba, sweet almond (argan under consideration)
-- **Essential oils**: eucalyptus, bergamot, lemongrass, cypress, lavender, spearmint, frankincense, cedarwood
+- **Carriers**: jojoba, sweet almond, argan
+- **Essential oils**: eucalyptus, bergamot, lemongrass, cypress, lavender, spearmint, frankincense, cedarwood, grapefruit
 
 ## Tech Stack
 
@@ -192,8 +192,8 @@ src/routes/
 │   ├── +page.svelte                # Journal entries list with add form
 │   └── +page.server.ts
 │
-├── calculator/                     # (Not yet implemented)
-│   └── +page.svelte
+├── calculator/
+│   └── +page.svelte                # Standalone dilution calculator (client-side only)
 │
 ├── assistant/                      # (Not yet implemented)
 │   └── +page.svelte
@@ -278,11 +278,11 @@ The assistant is primed with:
 - [x] Timeline view on formulation detail
 - [x] Rating display and filtering
 
-### Phase 5: Calculator
+### Phase 5: Calculator ✓
 
-- [ ] Standalone dilution calculator
-- [ ] Inputs: batch size, target concentration, oil ratios
-- [ ] Outputs: carrier volume, drops per EO, warnings
+- [x] Standalone dilution calculator
+- [x] Inputs: batch size, oil names, drops per oil
+- [x] Outputs: carrier volume, drops per EO, dilution %, safety warnings
 - [x] Basic dilution % shown on formulation detail
 
 ### Phase 6: AI Assistant
@@ -411,6 +411,22 @@ Defined in `src/routes/layout.css` using Tailwind v4's `@theme` directive:
 - **Fonts**: Playfair Display (headings), Inter (body)
 - **Custom classes**: `.btn-vintage`, `.card-glass`, `.fab`, `.diary-entry`
 - **Scent category badges**: `.badge-citrus`, `.badge-woody`, `.badge-herbal`, etc.
+### Aesthetic Principles
+
+- You tend to converge toward generic, "on distribution" outputs. In frontend design, this creates what users call the "AI slop" aesthetic. Avoid this: make creative, distinctive frontends that surprise and delight. Focus on:
+- **Typography**: Choose fonts that are beautiful, unique, and interesting. Avoid generic fonts like Arial and Inter; opt instead for distinctive choices that elevate the frontend's aesthetics.
+- **Color & Theme**: Commit to a cohesive aesthetic. Use CSS variables for consistency. Dominant colors with sharp accents outperform timid, evenly-distributed palettes. Draw from IDE themes and cultural aesthetics for inspiration.
+- **Motion**: Use animations for effects and micro-interactions. Prioritize CSS-only solutions for HTML. Use Motion library for React when available. Focus on high-impact moments: one well-orchestrated page load with staggered reveals (animation-delay) creates more delight than scattered micro-interactions.
+**Backgrounds**: Create atmosphere and depth rather than defaulting to solid colors. Layer CSS gradients, use geometric patterns, or add contextual effects that match the overall aesthetic.
+ 
+#### Avoid generic AI-generated aesthetics:
+- Overused font families (Inter, Roboto, Arial, system fonts)
+- Clichéd color schemes (particularly purple gradients on white backgrounds)
+- Predictable layouts and component patterns
+- Cookie-cutter design that lacks context-specific character
+ 
+Interpret creatively and make unexpected choices that feel genuinely designed for the context. Vary between light and dark themes, different fonts, different aesthetics. You still tend to converge on common choices (Space Grotesk, for example) across generations. Avoid this: it is critical that you think outside the box!
+
 
 ### Route Implementation Status
 
@@ -423,5 +439,5 @@ Defined in `src/routes/layout.css` using Tailwind v4's `@theme` directive:
 | `/oils/carrier`      | ✓      | List, add, edit                                      |
 | `/oils/essential`    | ✓      | List with pairing management                         |
 | `/diary`             | ✓      | Journal entries                                      |
-| `/calculator`        | ○      | Not yet implemented                                  |
+| `/calculator`        | ✓      | Batch size, oil drops, dilution %, safety indicator  |
 | `/assistant`         | ○      | Not yet implemented                                  |

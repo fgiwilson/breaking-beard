@@ -43,98 +43,57 @@
 			spicy: 'badge-spicy',
 			earthy: 'badge-earthy'
 		};
-		return map[category?.toLowerCase() ?? ''] ?? 'bg-amber-200 text-leather-800';
+		return map[category?.toLowerCase() ?? ''] ?? 'bg-ink-500 text-parchment-400';
 	}
 </script>
 
 <div class="space-y-6">
-	<!-- Header -->
-	<div class="flex items-end justify-between">
-		<div>
-			<h1 class="font-display text-2xl font-bold text-leather-900 lg:text-3xl">
-				The Formulation Lab
-			</h1>
-			<p class="mt-1 text-sm text-amber-700">Craft your perfect beard oil blend</p>
-		</div>
-		<a href={resolve('/formulations/new')} class="btn-vintage hidden sm:inline-flex">
-			<span class="flex items-center gap-2">
-				<svg class="h-4 w-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-					<path
-						stroke-linecap="round"
-						stroke-linejoin="round"
-						stroke-width="2"
-						d="M12 4v16m8-8H4"
-					/>
-				</svg>
-				New Formula
-			</span>
-		</a>
+	<!-- Page Title -->
+	<div class="text-center" style="animation: fadeInDown 0.6s ease-out;">
+		<div class="ornament-line"></div>
+		<h1 class="font-display text-2xl font-medium tracking-wide text-parchment-200 lg:text-3xl">
+			The Laboratory
+		</h1>
+		<p class="mt-1 font-display text-sm italic text-parchment-600">
+			An Overview of Your Craft
+		</p>
+		<div class="ornament-line"></div>
 	</div>
 
 	<!-- Stats Cards -->
 	<div class="grid grid-cols-3 gap-3">
-		<a href={resolve('/oils/carrier')} class="card-glass rounded-xl p-4 transition hover:shadow-md">
-			<div class="flex items-center gap-3">
-				<div class="flex h-10 w-10 items-center justify-center rounded-lg bg-amber-100">
-					<svg class="h-5 w-5 text-amber-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-						<path
-							stroke-linecap="round"
-							stroke-linejoin="round"
-							stroke-width="2"
-							d="M12 3c-4 4-7 7.5-7 11a7 7 0 1014 0c0-3.5-3-7-7-11z"
-						/>
-					</svg>
-				</div>
-				<div>
-					<p class="text-2xl font-bold text-leather-900">{data.stats.carrierOils}</p>
-					<p class="text-xs text-amber-700">Carriers</p>
-				</div>
+		<a href={resolve('/oils/carrier')} class="v-card p-4 transition hover:shadow-lg">
+			<div class="text-[0.6rem] font-semibold tracking-[0.15em] text-parchment-600 uppercase">
+				Carrier Oils
 			</div>
+			<div class="mt-1 font-display text-3xl font-bold text-amber-400">
+				{data.stats.carrierOils}
+			</div>
+			<div class="mt-0.5 text-xs italic text-parchment-700">in the cupboard</div>
 		</a>
-		<a
-			href={resolve('/oils/essential')}
-			class="card-glass rounded-xl p-4 transition hover:shadow-md"
-		>
-			<div class="flex items-center gap-3">
-				<div class="flex h-10 w-10 items-center justify-center rounded-lg bg-amber-100">
-					<svg class="h-5 w-5 text-amber-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-						<path
-							stroke-linecap="round"
-							stroke-linejoin="round"
-							stroke-width="2"
-							d="M9 3v2m6-2v2M9 5h6m-7 4l-2 10h12l-2-10M8 9h8"
-						/>
-					</svg>
-				</div>
-				<div>
-					<p class="text-2xl font-bold text-leather-900">{data.stats.essentialOils}</p>
-					<p class="text-xs text-amber-700">Essentials</p>
-				</div>
+		<a href={resolve('/oils/essential')} class="v-card p-4 transition hover:shadow-lg">
+			<div class="text-[0.6rem] font-semibold tracking-[0.15em] text-parchment-600 uppercase">
+				Essential Oils
 			</div>
+			<div class="mt-1 font-display text-3xl font-bold text-amber-400">
+				{data.stats.essentialOils}
+			</div>
+			<div class="mt-0.5 text-xs italic text-parchment-700">distillations on hand</div>
 		</a>
-		<a href={resolve('/formulations')} class="card-glass rounded-xl p-4 transition hover:shadow-md">
-			<div class="flex items-center gap-3">
-				<div class="flex h-10 w-10 items-center justify-center rounded-lg bg-amber-100">
-					<svg class="h-5 w-5 text-amber-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-						<path
-							stroke-linecap="round"
-							stroke-linejoin="round"
-							stroke-width="2"
-							d="M19.428 15.428a2 2 0 00-1.022-.547l-2.387-.477a6 6 0 00-3.86.517l-.318.158a6 6 0 01-3.86.517L6.05 15.21a2 2 0 00-1.806.547M8 4h8l-1 1v5.172a2 2 0 00.586 1.414l5 5c1.26 1.26.367 3.414-1.415 3.414H4.828c-1.782 0-2.674-2.154-1.414-3.414l5-5A2 2 0 009 10.172V5L8 4z"
-						/>
-					</svg>
-				</div>
-				<div>
-					<p class="text-2xl font-bold text-leather-900">{data.stats.formulations}</p>
-					<p class="text-xs text-amber-700">Formulas</p>
-				</div>
+		<a href={resolve('/formulations')} class="v-card p-4 transition hover:shadow-lg">
+			<div class="text-[0.6rem] font-semibold tracking-[0.15em] text-parchment-600 uppercase">
+				Formulations
 			</div>
+			<div class="mt-1 font-display text-3xl font-bold text-amber-400">
+				{data.stats.formulations}
+			</div>
+			<div class="mt-0.5 text-xs italic text-parchment-700">recipes in the ledger</div>
 		</a>
 	</div>
 
 	<!-- Quick Note -->
-	<div class="card-glass rounded-xl p-4">
-		<h2 class="mb-3 font-display text-lg font-semibold text-leather-900">Quick Note</h2>
+	<div class="v-card p-5">
+		<h2 class="mb-3 font-display text-lg font-semibold text-parchment-200">Quick Note</h2>
 		<form
 			onsubmit={(e) => {
 				e.preventDefault();
@@ -154,18 +113,7 @@
 				class="btn-vintage disabled:opacity-50"
 			>
 				{#if isSubmitting}
-					<svg class="h-4 w-4 animate-spin" viewBox="0 0 24 24">
-						<circle
-							cx="12"
-							cy="12"
-							r="10"
-							stroke="currentColor"
-							stroke-width="4"
-							fill="none"
-							opacity="0.25"
-						/>
-						<path fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4z" />
-					</svg>
+					<i class="fa-duotone fa-solid fa-spinner fa-spin"></i>
 				{:else}
 					Add
 				{/if}
@@ -176,29 +124,19 @@
 	<!-- Two column layout -->
 	<div class="grid gap-6 lg:grid-cols-2">
 		<!-- Recent Formulas -->
-		<div class="card-glass rounded-xl p-4">
+		<div class="v-card p-5">
 			<div class="mb-4 flex items-center justify-between">
-				<h2 class="font-display text-lg font-semibold text-leather-900">Recent Formulas</h2>
-				<a href={resolve('/formulations')} class="text-sm text-amber-600 hover:text-amber-700"
-					>View all</a
+				<h2 class="font-display text-lg font-semibold text-parchment-200">Recent Formulae</h2>
+				<a
+					href={resolve('/formulations')}
+					class="font-display text-sm text-amber-600 transition hover:text-amber-400"
+					>View all &rarr;</a
 				>
 			</div>
 			{#if data.formulations.length === 0}
 				<div class="py-8 text-center">
-					<svg
-						class="mx-auto h-12 w-12 text-amber-300"
-						fill="none"
-						stroke="currentColor"
-						viewBox="0 0 24 24"
-					>
-						<path
-							stroke-linecap="round"
-							stroke-linejoin="round"
-							stroke-width="1.5"
-							d="M19.428 15.428a2 2 0 00-1.022-.547l-2.387-.477a6 6 0 00-3.86.517l-.318.158a6 6 0 01-3.86.517L6.05 15.21a2 2 0 00-1.806.547M8 4h8l-1 1v5.172a2 2 0 00.586 1.414l5 5c1.26 1.26.367 3.414-1.415 3.414H4.828c-1.782 0-2.674-2.154-1.414-3.414l5-5A2 2 0 009 10.172V5L8 4z"
-						/>
-					</svg>
-					<p class="mt-2 text-sm text-amber-700">No formulas yet</p>
+					<i class="fa-duotone fa-solid fa-flask-vial text-4xl text-ink-500"></i>
+					<p class="mt-2 text-sm text-parchment-600">No formulae yet</p>
 					<a href={resolve('/formulations/new')} class="btn-vintage mt-3 inline-block text-sm">
 						Create your first
 					</a>
@@ -208,14 +146,14 @@
 					{#each data.formulations as formula (formula.id)}
 						<a
 							href={resolve(`/formulations/${formula.id}`)}
-							class="block rounded-lg border border-amber-100 bg-white/50 p-3 transition hover:border-amber-300 hover:shadow-sm"
+							class="block rounded-lg border border-amber-500/10 bg-ink-600/50 p-3 transition hover:border-amber-500/25 hover:bg-ink-600"
 						>
 							<div class="flex items-start justify-between">
 								<div>
-									<h3 class="font-medium text-leather-900">{formula.name}</h3>
-									<p class="mt-0.5 text-xs text-amber-600">
+									<h3 class="font-display font-semibold text-parchment-300">{formula.name}</h3>
+									<p class="mt-0.5 text-xs text-parchment-600">
 										{#if formula.purpose}
-											<span class="capitalize">{formula.purpose}</span> •
+											<span class="capitalize">{formula.purpose}</span> &middot;
 										{/if}
 										{formula._count.testLogs} tests
 									</p>
@@ -239,27 +177,15 @@
 		</div>
 
 		<!-- Recent Test Logs -->
-		<div class="card-glass rounded-xl p-4">
+		<div class="v-card p-5">
 			<div class="mb-4 flex items-center justify-between">
-				<h2 class="font-display text-lg font-semibold text-leather-900">Test Log</h2>
+				<h2 class="font-display text-lg font-semibold text-parchment-200">Test Log</h2>
 			</div>
 			{#if data.recentTestLogs.length === 0}
 				<div class="py-8 text-center">
-					<svg
-						class="mx-auto h-12 w-12 text-amber-300"
-						fill="none"
-						stroke="currentColor"
-						viewBox="0 0 24 24"
-					>
-						<path
-							stroke-linecap="round"
-							stroke-linejoin="round"
-							stroke-width="1.5"
-							d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"
-						/>
-					</svg>
-					<p class="mt-2 text-sm text-amber-700">No test logs yet</p>
-					<p class="mt-1 text-xs text-amber-600">Create a formula and start testing!</p>
+					<i class="fa-duotone fa-solid fa-clipboard-list text-4xl text-ink-500"></i>
+					<p class="mt-2 text-sm text-parchment-600">No test logs yet</p>
+					<p class="mt-1 text-xs text-parchment-700">Create a formula and start testing!</p>
 				</div>
 			{:else}
 				<div class="space-y-3">
@@ -267,27 +193,22 @@
 						<div class="diary-entry">
 							<div class="flex items-start justify-between">
 								<div>
-									<p class="text-sm font-medium text-leather-900">{log.formulation.name}</p>
-									<p class="mt-0.5 text-xs text-amber-600">{formatDate(log.date)}</p>
+									<p class="text-sm font-medium text-parchment-300">{log.formulation.name}</p>
+									<p class="mt-0.5 text-xs text-parchment-600">{formatDate(log.date)}</p>
 								</div>
 								{#if log.rating}
 									<div class="rating">
 										{#each [1, 2, 3, 4, 5] as star (star)}
-											<svg
-												class="star"
-												class:filled={star <= log.rating}
-												viewBox="0 0 20 20"
-												fill="currentColor"
-											>
-												<path
-													d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"
-												/>
-											</svg>
+											<i
+												class="star {star <= log.rating
+													? 'fa-sharp-duotone fa-solid fa-star filled'
+													: 'fa-sharp-duotone fa-regular fa-star'}"
+											></i>
 										{/each}
 									</div>
 								{/if}
 							</div>
-							<p class="mt-1 text-sm text-leather-700">{log.notes}</p>
+							<p class="mt-1 text-sm text-parchment-500">{log.notes}</p>
 						</div>
 					{/each}
 				</div>
@@ -297,21 +218,25 @@
 
 	<!-- Journal Entries -->
 	{#if data.diaryEntries.length > 0}
-		<div class="card-glass rounded-xl p-4">
+		<div class="v-card p-5">
 			<div class="mb-4 flex items-center justify-between">
-				<h2 class="font-display text-lg font-semibold text-leather-900">Journal</h2>
-				<a href={resolve('/diary')} class="text-sm text-amber-600 hover:text-amber-700">View all</a>
+				<h2 class="font-display text-lg font-semibold text-parchment-200">Journal</h2>
+				<a
+					href={resolve('/diary')}
+					class="font-display text-sm text-amber-600 transition hover:text-amber-400"
+					>View all &rarr;</a
+				>
 			</div>
 			<div class="space-y-3">
 				{#each data.diaryEntries as entry (entry.id)}
 					<div class="diary-entry">
 						<div class="flex items-start justify-between">
 							{#if entry.title}
-								<p class="text-sm font-medium text-leather-900">{entry.title}</p>
+								<p class="text-sm font-medium text-parchment-300">{entry.title}</p>
 							{/if}
-							<p class="text-xs text-amber-600">{formatDate(entry.createdAt)}</p>
+							<p class="text-xs text-parchment-600">{formatDate(entry.createdAt)}</p>
 						</div>
-						<p class="mt-1 text-sm text-leather-700">{entry.content}</p>
+						<p class="mt-1 text-sm text-parchment-500">{entry.content}</p>
 					</div>
 				{/each}
 			</div>
@@ -321,7 +246,5 @@
 
 <!-- Mobile FAB -->
 <a href={resolve('/formulations/new')} class="fab sm:hidden" aria-label="New Formula">
-	<svg class="h-6 w-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-		<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4" />
-	</svg>
+	<i class="fa-sharp fa-solid fa-plus text-xl"></i>
 </a>

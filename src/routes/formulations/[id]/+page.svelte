@@ -74,9 +74,9 @@
 			floral: 'badge-floral',
 			spicy: 'badge-spicy',
 			earthy: 'badge-earthy',
-			resinous: 'bg-amber-700 text-white'
+			resinous: 'badge-resinous'
 		};
-		return map[category?.toLowerCase() ?? ''] ?? 'bg-amber-200 text-leather-800';
+		return map[category?.toLowerCase() ?? ''] ?? 'bg-ink-500 text-parchment-400';
 	}
 
 	function getCarrierName(id: string): string {
@@ -152,15 +152,17 @@
 	<!-- Header -->
 	<div class="flex items-start justify-between gap-4">
 		<div>
-			<a href={resolve('/formulations')} class="text-sm text-amber-600 hover:text-amber-700"
-				>&larr; Formulas</a
+			<a
+				href={resolve('/formulations')}
+				class="font-display text-sm text-amber-600 transition hover:text-amber-400"
+				>&larr; Formulary</a
 			>
-			<h1 class="mt-1 font-display text-2xl font-bold text-leather-900 lg:text-3xl">
+			<h1 class="mt-1 font-display text-2xl font-bold tracking-wide text-parchment-200 lg:text-3xl">
 				{data.formulation.name}
 			</h1>
-			<div class="mt-1 flex flex-wrap items-center gap-2 text-sm text-amber-600">
+			<div class="mt-1 flex flex-wrap items-center gap-2 text-sm text-parchment-600">
 				{#if data.formulation.purpose}
-					<span class="rounded-full bg-amber-100 px-2 py-0.5 capitalize">
+					<span class="scoop-sm border border-amber-500/15 bg-ink-600 px-2 py-0.5 text-xs capitalize">
 						{data.formulation.purpose}
 					</span>
 				{/if}
@@ -173,40 +175,26 @@
 		<div class="flex gap-2">
 			<button
 				onclick={() => (isEditing = true)}
-				class="rounded-lg bg-amber-100 p-2 text-amber-700 transition hover:bg-amber-200"
+				class="scoop-sm bg-ink-600 p-2 text-parchment-500 transition hover:bg-ink-500 hover:text-amber-400"
 				aria-label="Edit formula"
 			>
-				<svg class="h-5 w-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-					<path
-						stroke-linecap="round"
-						stroke-linejoin="round"
-						stroke-width="2"
-						d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z"
-					/>
-				</svg>
+				<i class="fa-sharp fa-regular fa-pen-to-square"></i>
 			</button>
 			<button
 				onclick={() => (showDeleteConfirm = true)}
-				class="rounded-lg bg-red-50 p-2 text-red-500 transition hover:bg-red-100"
+				class="scoop-sm bg-red-500/10 p-2 text-red-400 transition hover:bg-red-500/20"
 				aria-label="Delete formula"
 			>
-				<svg class="h-5 w-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-					<path
-						stroke-linecap="round"
-						stroke-linejoin="round"
-						stroke-width="2"
-						d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"
-					/>
-				</svg>
+				<i class="fa-sharp fa-regular fa-trash-can"></i>
 			</button>
 		</div>
 	</div>
 
 	<!-- Edit Modal -->
 	{#if isEditing}
-		<div class="fixed inset-0 z-50 flex items-center justify-center bg-leather-900/50 p-4">
-			<div class="card-glass max-h-[90vh] w-full max-w-md overflow-y-auto rounded-xl p-6">
-				<h2 class="mb-4 font-display text-xl font-semibold text-leather-900">Edit Formula</h2>
+		<div class="fixed inset-0 z-50 flex items-center justify-center bg-ink-950/80 p-4">
+			<div class="scoop-lg w-full max-w-md overflow-y-auto border border-amber-500/15 bg-ink-700 p-6" style="max-height: 90vh;">
+				<h2 class="mb-4 font-display text-xl font-semibold text-parchment-200">Edit Formula</h2>
 
 				<form
 					method="POST"
@@ -222,7 +210,7 @@
 					class="space-y-4"
 				>
 					<div>
-						<label for="name" class="mb-1 block text-sm font-medium text-leather-800">Name</label>
+						<label for="name" class="mb-1 block text-sm font-medium text-parchment-400">Name</label>
 						<input
 							type="text"
 							id="name"
@@ -235,7 +223,7 @@
 
 					<div class="grid grid-cols-2 gap-4">
 						<div>
-							<label for="purpose" class="mb-1 block text-sm font-medium text-leather-800">
+							<label for="purpose" class="mb-1 block text-sm font-medium text-parchment-400">
 								Purpose
 							</label>
 							<select id="purpose" name="purpose" bind:value={editPurpose} class="w-full">
@@ -246,7 +234,7 @@
 							</select>
 						</div>
 						<div>
-							<label for="volume" class="mb-1 block text-sm font-medium text-leather-800">
+							<label for="volume" class="mb-1 block text-sm font-medium text-parchment-400">
 								Batch (ml)
 							</label>
 							<input
@@ -262,18 +250,14 @@
 					</div>
 
 					<div>
-						<label for="notes" class="mb-1 block text-sm font-medium text-leather-800">Notes</label>
+						<label for="notes" class="mb-1 block text-sm font-medium text-parchment-400">Notes</label>
 						<textarea id="notes" name="notes" bind:value={editNotes} rows="3" class="w-full"
 						></textarea>
 					</div>
 
 					<div class="flex gap-3">
 						<button type="submit" class="btn-vintage flex-1">Save</button>
-						<button
-							type="button"
-							onclick={cancelEdit}
-							class="flex-1 rounded-md border border-amber-300 px-4 py-2 text-sm font-medium text-leather-700 transition hover:bg-amber-50"
-						>
+						<button type="button" onclick={cancelEdit} class="btn-outline flex-1">
 							Cancel
 						</button>
 					</div>
@@ -284,10 +268,10 @@
 
 	<!-- Delete Confirmation -->
 	{#if showDeleteConfirm}
-		<div class="fixed inset-0 z-50 flex items-center justify-center bg-leather-900/50 p-4">
-			<div class="card-glass w-full max-w-sm rounded-xl p-6">
-				<h2 class="mb-2 font-display text-xl font-semibold text-leather-900">Delete Formula?</h2>
-				<p class="text-leather-600 mb-4 text-sm">
+		<div class="fixed inset-0 z-50 flex items-center justify-center bg-ink-950/80 p-4">
+			<div class="scoop-lg w-full max-w-sm border border-amber-500/15 bg-ink-700 p-6">
+				<h2 class="mb-2 font-display text-xl font-semibold text-parchment-200">Delete Formula?</h2>
+				<p class="mb-4 text-sm text-parchment-500">
 					This will permanently delete "{data.formulation.name}" and all its test logs.
 				</p>
 				<form
@@ -304,14 +288,14 @@
 				>
 					<button
 						type="submit"
-						class="flex-1 rounded-md bg-red-500 px-4 py-2 text-sm font-medium text-white transition hover:bg-red-600"
+						class="scoop-sm flex-1 bg-red-500/20 px-4 py-2 text-sm font-medium text-red-400 transition hover:bg-red-500/30"
 					>
 						Delete
 					</button>
 					<button
 						type="button"
 						onclick={() => (showDeleteConfirm = false)}
-						class="flex-1 rounded-md border border-amber-300 px-4 py-2 text-sm font-medium text-leather-700 transition hover:bg-amber-50"
+						class="btn-outline flex-1"
 					>
 						Cancel
 					</button>
@@ -322,21 +306,21 @@
 
 	<!-- Notes -->
 	{#if data.formulation.notes}
-		<div class="card-glass rounded-xl p-4">
-			<p class="text-sm text-leather-700">{data.formulation.notes}</p>
+		<div class="v-card p-5">
+			<p class="text-sm text-parchment-400">{data.formulation.notes}</p>
 		</div>
 	{/if}
 
 	<!-- Recipe -->
 	<div class="grid gap-6 lg:grid-cols-2">
 		<!-- Carrier Oils -->
-		<div class="card-glass rounded-xl p-4">
+		<div class="v-card p-5">
 			<div class="mb-4 flex items-center justify-between">
-				<h2 class="font-display text-lg font-semibold text-leather-900">Carrier Base</h2>
+				<h2 class="font-display text-lg font-semibold text-parchment-200">Carrier Base</h2>
 				{#if !isEditingOils}
 					<button
 						onclick={() => (isEditingOils = true)}
-						class="text-sm text-amber-600 hover:text-amber-700"
+						class="font-display text-sm text-amber-600 transition hover:text-amber-400"
 					>
 						Edit
 					</button>
@@ -346,8 +330,8 @@
 			{#if isEditingOils}
 				<div class="space-y-3">
 					{#each selectedCarriers as carrier, i (carrier.id)}
-						<div class="flex items-center gap-3 rounded-lg bg-amber-50 p-2">
-							<span class="flex-1 text-sm font-medium text-leather-800">
+						<div class="flex items-center gap-3 rounded-lg bg-ink-600 p-2">
+							<span class="flex-1 text-sm font-medium text-parchment-300">
 								{getCarrierName(carrier.id)}
 							</span>
 							<input
@@ -357,21 +341,14 @@
 								max="100"
 								class="w-20 text-center text-sm"
 							/>
-							<span class="text-sm text-amber-600">%</span>
+							<span class="text-sm text-parchment-600">%</span>
 							<button
 								type="button"
 								onclick={() => removeCarrier(carrier.id)}
-								class="text-red-400 hover:text-red-600"
+								class="text-red-400 hover:text-red-300"
 								aria-label="Remove {getCarrierName(carrier.id)}"
 							>
-								<svg class="h-4 w-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-									<path
-										stroke-linecap="round"
-										stroke-linejoin="round"
-										stroke-width="2"
-										d="M6 18L18 6M6 6l12 12"
-									/>
-								</svg>
+								<i class="fa-sharp fa-solid fa-xmark"></i>
 							</button>
 						</div>
 					{/each}
@@ -381,7 +358,7 @@
 							<button
 								type="button"
 								onclick={() => addCarrier(oil.id)}
-								class="rounded-full bg-amber-100 px-3 py-1 text-sm text-amber-700 transition hover:bg-amber-200"
+								class="scoop-sm bg-ink-600 px-3 py-1 text-sm text-parchment-500 transition hover:bg-ink-500 hover:text-amber-400"
 							>
 								+ {oil.name}
 							</button>
@@ -390,27 +367,28 @@
 
 					<div class="flex items-center justify-between pt-2 text-sm">
 						<span
-							class:text-green-600={totalCarrierPct === 100}
-							class:text-amber-600={totalCarrierPct !== 100}
+							class:text-sage-300={totalCarrierPct === 100}
+							class:text-parchment-600={totalCarrierPct !== 100}
 						>
 							Total: {totalCarrierPct}%
 						</span>
 						<div class="flex gap-2">
 							<button onclick={saveOils} class="btn-vintage text-sm">Save</button>
-							<button onclick={cancelOilEdit} class="text-amber-600 hover:text-amber-700"
-								>Cancel</button
+							<button
+								onclick={cancelOilEdit}
+								class="font-display text-sm text-amber-600 hover:text-amber-400">Cancel</button
 							>
 						</div>
 					</div>
 				</div>
 			{:else if data.formulation.carrierOils.length === 0}
-				<p class="text-sm text-amber-600">No carrier oils added</p>
+				<p class="text-sm text-parchment-600">No carrier oils added</p>
 			{:else}
 				<div class="space-y-2">
 					{#each data.formulation.carrierOils as co (co.id)}
 						<div class="flex items-center justify-between">
-							<span class="text-sm font-medium text-leather-800">{co.carrierOil.name}</span>
-							<span class="text-sm text-amber-600">{co.percentage}%</span>
+							<span class="text-sm font-medium text-parchment-300">{co.carrierOil.name}</span>
+							<span class="font-display text-sm text-amber-500">{co.percentage}%</span>
 						</div>
 					{/each}
 				</div>
@@ -418,13 +396,13 @@
 		</div>
 
 		<!-- Essential Oils -->
-		<div class="card-glass rounded-xl p-4">
+		<div class="v-card p-5">
 			<div class="mb-4 flex items-center justify-between">
-				<h2 class="font-display text-lg font-semibold text-leather-900">Essential Oils</h2>
+				<h2 class="font-display text-lg font-semibold text-parchment-200">Essential Oils</h2>
 				{#if !isEditingOils}
 					<button
 						onclick={() => (isEditingOils = true)}
-						class="text-sm text-amber-600 hover:text-amber-700"
+						class="font-display text-sm text-amber-600 transition hover:text-amber-400"
 					>
 						Edit
 					</button>
@@ -434,7 +412,7 @@
 			{#if isEditingOils}
 				<div class="space-y-3">
 					{#each selectedEssentials as essential, i (essential.id)}
-						<div class="flex items-center gap-3 rounded-lg bg-amber-50 p-2">
+						<div class="flex items-center gap-3 rounded-lg bg-ink-600 p-2">
 							<span
 								class="rounded-full px-2 py-0.5 text-xs font-medium {getScentBadgeClass(
 									getScentCategory(essential.id)
@@ -442,7 +420,7 @@
 							>
 								{getScentCategory(essential.id) || '?'}
 							</span>
-							<span class="flex-1 text-sm font-medium text-leather-800">
+							<span class="flex-1 text-sm font-medium text-parchment-300">
 								{getEssentialName(essential.id)}
 							</span>
 							<input
@@ -452,21 +430,14 @@
 								max="20"
 								class="w-16 text-center text-sm"
 							/>
-							<span class="text-sm text-amber-600">drops</span>
+							<span class="text-sm text-parchment-600">drops</span>
 							<button
 								type="button"
 								onclick={() => removeEssential(essential.id)}
-								class="text-red-400 hover:text-red-600"
+								class="text-red-400 hover:text-red-300"
 								aria-label="Remove {getEssentialName(essential.id)}"
 							>
-								<svg class="h-4 w-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-									<path
-										stroke-linecap="round"
-										stroke-linejoin="round"
-										stroke-width="2"
-										d="M6 18L18 6M6 6l12 12"
-									/>
-								</svg>
+								<i class="fa-sharp fa-solid fa-xmark"></i>
 							</button>
 						</div>
 					{/each}
@@ -485,12 +456,12 @@
 						{/each}
 					</div>
 
-					<p class="pt-2 text-xs text-amber-600">
+					<p class="pt-2 text-xs text-parchment-600">
 						{totalDrops} drops total = ~{totalEoPct.toFixed(1)}% dilution
 					</p>
 				</div>
 			{:else if data.formulation.essentialOils.length === 0}
-				<p class="text-sm text-amber-600">No essential oils added</p>
+				<p class="text-sm text-parchment-600">No essential oils added</p>
 			{:else}
 				<div class="space-y-2">
 					{#each data.formulation.essentialOils as eo (eo.id)}
@@ -503,12 +474,12 @@
 								>
 									{eo.essentialOil.scentCategory || '?'}
 								</span>
-								<span class="text-sm font-medium text-leather-800">{eo.essentialOil.name}</span>
+								<span class="text-sm font-medium text-parchment-300">{eo.essentialOil.name}</span>
 							</div>
-							<span class="text-sm text-amber-600">
+							<span class="font-display text-sm text-amber-500">
 								{eo.drops} drops
 								{#if eo.percentage}
-									<span class="text-xs">({eo.percentage.toFixed(1)}%)</span>
+									<span class="text-xs text-parchment-600">({eo.percentage.toFixed(1)}%)</span>
 								{/if}
 							</span>
 						</div>
@@ -520,7 +491,8 @@
 						0
 					)}
 					{@const totalPct = ((totalDropsDisplay * 0.05) / data.formulation.totalVolumeMl) * 100}
-					<p class="mt-3 border-t border-amber-100 pt-3 text-xs text-amber-600">
+					<div class="ornament-divider mt-3">&mdash;&#10022;&mdash;</div>
+					<p class="text-center text-xs text-parchment-600">
 						{totalDropsDisplay} drops total = ~{totalPct.toFixed(1)}% dilution
 					</p>
 				{/if}
@@ -529,9 +501,9 @@
 	</div>
 
 	<!-- Test Logs -->
-	<div class="card-glass rounded-xl p-4">
+	<div class="v-card p-5">
 		<div class="mb-4 flex items-center justify-between">
-			<h2 class="font-display text-lg font-semibold text-leather-900">Test Log</h2>
+			<h2 class="font-display text-lg font-semibold text-parchment-200">Test Log</h2>
 			<button onclick={() => (showTestLogForm = !showTestLogForm)} class="btn-vintage text-sm">
 				{showTestLogForm ? 'Cancel' : '+ Add Test'}
 			</button>
@@ -551,10 +523,10 @@
 						await update();
 					};
 				}}
-				class="mb-4 space-y-3 rounded-lg bg-amber-50 p-4"
+				class="mb-4 space-y-3 rounded-lg border border-amber-500/10 bg-ink-600 p-4"
 			>
 				<div>
-					<label for="testNotes" class="mb-1 block text-sm font-medium text-leather-800">
+					<label for="testNotes" class="mb-1 block text-sm font-medium text-parchment-400">
 						How did it go?
 					</label>
 					<textarea
@@ -569,7 +541,7 @@
 				</div>
 
 				<div>
-					<span id="rating-label" class="mb-2 block text-sm font-medium text-leather-800"
+					<span id="rating-label" class="mb-2 block text-sm font-medium text-parchment-400"
 						>Rating</span
 					>
 					<div class="flex gap-1" role="group" aria-labelledby="rating-label">
@@ -582,11 +554,11 @@
 								aria-label="{star} star{star > 1 ? 's' : ''}"
 								aria-pressed={testRating !== null && star <= testRating}
 							>
-								<svg viewBox="0 0 20 20" fill="currentColor" class="h-6 w-6">
-									<path
-										d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"
-									/>
-								</svg>
+								<i
+									class="{testRating !== null && star <= testRating
+										? 'fa-sharp-duotone fa-solid fa-star'
+										: 'fa-sharp-duotone fa-regular fa-star'} text-2xl"
+								></i>
 							</button>
 						{/each}
 					</div>
@@ -598,7 +570,7 @@
 		{/if}
 
 		{#if data.formulation.testLogs.length === 0}
-			<p class="py-4 text-center text-sm text-amber-600">
+			<p class="py-4 text-center text-sm text-parchment-600">
 				No tests yet. Try out this formula and log your experience!
 			</p>
 		{:else}
@@ -607,23 +579,18 @@
 					<div class="diary-entry group relative">
 						<div class="flex items-start justify-between gap-2">
 							<div class="flex-1">
-								<p class="text-xs text-amber-600">{formatDate(log.date)}</p>
-								<p class="mt-1 text-sm text-leather-700">{log.notes}</p>
+								<p class="text-xs text-parchment-600">{formatDate(log.date)}</p>
+								<p class="mt-1 text-sm text-parchment-400">{log.notes}</p>
 							</div>
 							<div class="flex items-center gap-2">
 								{#if log.rating}
 									<div class="rating">
 										{#each [1, 2, 3, 4, 5] as star (star)}
-											<svg
-												class="star h-4 w-4"
-												class:filled={star <= log.rating}
-												viewBox="0 0 20 20"
-												fill="currentColor"
-											>
-												<path
-													d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"
-												/>
-											</svg>
+											<i
+												class="star {star <= log.rating
+													? 'fa-sharp-duotone fa-solid fa-star filled'
+													: 'fa-sharp-duotone fa-regular fa-star'}"
+											></i>
 										{/each}
 									</div>
 								{/if}
@@ -636,17 +603,10 @@
 									<input type="hidden" name="id" value={log.id} />
 									<button
 										type="submit"
-										class="rounded p-1 text-red-400 transition hover:bg-red-50 hover:text-red-600"
+										class="rounded p-1 text-red-400/50 transition hover:text-red-400"
 										aria-label="Delete test log"
 									>
-										<svg class="h-4 w-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-											<path
-												stroke-linecap="round"
-												stroke-linejoin="round"
-												stroke-width="2"
-												d="M6 18L18 6M6 6l12 12"
-											/>
-										</svg>
+										<i class="fa-sharp fa-solid fa-xmark"></i>
 									</button>
 								</form>
 							</div>
