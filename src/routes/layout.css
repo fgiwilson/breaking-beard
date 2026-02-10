@@ -140,7 +140,7 @@ h3,
 .v-card::before {
 	content: '';
 	position: absolute;
-	inset: 5px;
+	inset: 8px;
 	border: 1px solid oklch(0.68 0.14 70 / 0.08);
 	border-radius: 0.7rem;
 	corner-shape: scoop;
@@ -176,7 +176,7 @@ h3,
 
 .btn-vintage {
 	background: linear-gradient(180deg, var(--color-amber-600) 0%, var(--color-amber-700) 100%);
-	color: var(--color-parchment-100);
+	color: var(--color-parchment-50);
 	padding: 0.5rem 1.25rem;
 	border-radius: 0.5rem;
 	corner-shape: scoop;

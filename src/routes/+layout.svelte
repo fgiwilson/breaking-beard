@@ -12,7 +12,11 @@
 			title: 'Workshop',
 			items: [
 				{ title: 'Dashboard', href: '/' as const, icon: 'fa-duotone fa-solid fa-compass' },
-				{ title: 'Formulary', href: '/formulations' as const, icon: 'fa-duotone fa-solid fa-scroll' },
+				{
+					title: 'Formulary',
+					href: '/formulations' as const,
+					icon: 'fa-duotone fa-solid fa-scroll'
+				},
 				{
 					title: 'New Formula',
 					href: '/formulations/new' as const,
@@ -23,7 +27,11 @@
 		{
 			title: 'Ingredients',
 			items: [
-				{ title: 'Carrier Oils', href: '/oils/carrier' as const, icon: 'fa-duotone fa-solid fa-droplet' },
+				{
+					title: 'Carrier Oils',
+					href: '/oils/carrier' as const,
+					icon: 'fa-duotone fa-solid fa-droplet'
+				},
 				{
 					title: 'Essential Oils',
 					href: '/oils/essential' as const,
@@ -126,16 +134,20 @@
 				{#if sectionIdx > 0}
 					<div class="ornament-divider">&middot; &middot; &middot;</div>
 				{/if}
-				<div class="mb-1 px-5 py-1.5 text-[0.6rem] font-semibold tracking-[0.2em] text-parchment-700 uppercase">
+				<div
+					class="mb-1 px-5 py-1.5 text-sm font-semibold tracking-[0.2em] text-parchment-700 uppercase"
+				>
 					{section.title}
 				</div>
 				{#each section.items as item (item.href)}
 					<a
 						href={resolve(item.href)}
 						onclick={() => (sidebarOpen = false)}
-						class="mx-2 mb-0.5 flex items-center gap-3 border-l-2 px-4 py-2 text-[0.9rem] transition-all duration-200 {isActive(item.href)
-						? 'border-amber-500 text-amber-400 bg-amber-500/8'
-						: 'border-transparent text-parchment-500 hover:text-amber-400 hover:border-amber-500/30 hover:bg-amber-500/5'}"
+						class="mx-2 mb-0.5 flex items-center gap-3 border-l-2 px-4 py-2 transition-all duration-200 {isActive(
+							item.href
+						)
+							? 'border-amber-500 bg-amber-500/8 text-amber-400'
+							: 'border-transparent text-parchment-500 hover:border-amber-500/30 hover:bg-amber-500/5 hover:text-amber-400'}"
 					>
 						<i class="{item.icon} w-5 text-center text-[0.8rem] opacity-70"></i>
 						{item.title}
