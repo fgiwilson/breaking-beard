@@ -32,7 +32,7 @@
 			<h1 class="font-display text-2xl font-bold tracking-wide text-parchment-200">
 				The Formulary
 			</h1>
-			<p class="mt-1 font-display text-sm italic text-parchment-600">Your beard oil recipes</p>
+			<p class="mt-1 font-display text-sm text-parchment-600 italic">Your beard oil recipes</p>
 		</div>
 		<a href={resolve('/formulations/new')} class="btn-vintage">
 			<span class="flex items-center gap-2">
@@ -46,7 +46,7 @@
 	<div class="flex gap-2">
 		<a
 			href={resolve('/formulations')}
-			class="scoop-sm px-3 py-1.5 text-sm font-medium transition"
+			class="scoop-sm px-4 py-1.5 text-sm font-medium transition"
 			class:bg-amber-600={!data.filter}
 			class:text-parchment-100={!data.filter}
 			class:bg-ink-600={data.filter}
@@ -58,7 +58,7 @@
 		{#each ['morning', 'evening', 'all-day'] as purpose (purpose)}
 			<a
 				href={`${resolve('/formulations')}?purpose=${purpose}`}
-				class="scoop-sm px-3 py-1.5 text-sm font-medium capitalize transition"
+				class="scoop-sm px-4 py-1.5 text-sm font-medium capitalize transition"
 				class:bg-amber-600={data.filter === purpose}
 				class:text-parchment-100={data.filter === purpose}
 				class:bg-ink-600={data.filter !== purpose}
@@ -93,7 +93,7 @@
 							<div class="mt-1 flex items-center gap-2 text-xs text-parchment-600">
 								{#if formula.purpose}
 									<span
-										class="scoop-sm border border-amber-500/15 bg-ink-600 px-2 py-0.5 capitalize"
+										class="scoop-xs border border-amber-500/15 bg-ink-600 px-2 py-0.5 capitalize"
 									>
 										{formula.purpose}
 									</span>
@@ -104,9 +104,7 @@
 							</div>
 						</div>
 						{#if formula._count.testLogs > 0}
-							<span
-								class="scoop-sm bg-amber-600/20 px-2 py-0.5 text-xs font-medium text-amber-400"
-							>
+							<span class="scoop-xs bg-amber-600/20 px-2 py-0.5 text-xs font-medium text-amber-400">
 								{formula._count.testLogs} tests
 							</span>
 						{/if}

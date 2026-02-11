@@ -97,15 +97,12 @@
 	<div>
 		<a
 			href={resolve('/formulations')}
-			class="font-display text-sm text-amber-600 transition hover:text-amber-400"
-			>&larr; Back</a
+			class="font-display text-sm text-amber-600 transition hover:text-amber-400">&larr; Back</a
 		>
 		<h1 class="mt-2 font-display text-2xl font-bold tracking-wide text-parchment-200">
 			New Formula
 		</h1>
-		<p class="mt-1 font-display text-sm italic text-parchment-600">
-			Create a new beard oil blend
-		</p>
+		<p class="mt-1 font-display text-sm text-parchment-600 italic">Create a new beard oil blend</p>
 	</div>
 
 	<form onsubmit={handleSubmit} class="space-y-6">
@@ -132,7 +129,7 @@
 					<label for="purpose" class="mb-1 block text-sm font-medium text-parchment-400">
 						Purpose
 					</label>
-					<select id="purpose" bind:value={purpose} class="w-full">
+					<select id="purpose" bind:value={purpose} class="w-full p-2">
 						<option value="">Select...</option>
 						<option value="morning">Morning</option>
 						<option value="evening">Evening</option>
@@ -155,9 +152,7 @@
 				</div>
 
 				<div class="sm:col-span-2">
-					<label for="notes" class="mb-1 block text-sm font-medium text-parchment-400"
-						>Notes</label
-					>
+					<label for="notes" class="mb-1 block text-sm font-medium text-parchment-400">Notes</label>
 					<textarea
 						id="notes"
 						bind:value={notes}
@@ -215,7 +210,7 @@
 					<button
 						type="button"
 						onclick={() => addCarrier(oil.id)}
-						class="scoop-sm bg-ink-600 px-3 py-1 text-sm text-parchment-500 transition hover:bg-ink-500 hover:text-amber-400"
+						class="scoop-xs bg-ink-600 px-3 py-1 text-sm text-parchment-500 transition hover:bg-ink-500 hover:text-amber-400"
 					>
 						+ {oil.name}
 					</button>
@@ -223,9 +218,7 @@
 			</div>
 
 			{#if totalCarrierPct !== 100 && selectedCarriers.length > 0}
-				<p class="mt-2 text-xs text-parchment-600">
-					Tip: Carrier percentages should total 100%
-				</p>
+				<p class="mt-2 text-xs text-parchment-600">Tip: Carrier percentages should total 100%</p>
 			{/if}
 		</div>
 
