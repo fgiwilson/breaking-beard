@@ -57,3 +57,8 @@ export type TestLog = Prisma.TestLogModel
  * 
  */
 export type DiaryEntry = Prisma.DiaryEntryModel
+/**
+ * Model EssentialOilWishlist
+ * 
+ */
+export type EssentialOilWishlist = Prisma.EssentialOilWishlistModel

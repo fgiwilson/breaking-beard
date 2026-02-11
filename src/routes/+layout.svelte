@@ -36,6 +36,11 @@
 					title: 'Essential Oils',
 					href: '/oils/essential' as const,
 					icon: 'fa-duotone fa-solid fa-flask-vial'
+				},
+				{
+					title: 'Oil Wishlist',
+					href: '/oils/essential/wishlist' as const,
+					icon: 'fa-duotone fa-solid fa-star'
 				}
 			]
 		},

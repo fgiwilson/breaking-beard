@@ -38,6 +38,8 @@ export type FormulationMinAggregateOutputType = {
   id: string | null
   name: string | null
   purpose: string | null
+  status: string | null
+  melissaApproved: boolean | null
   totalVolumeMl: number | null
   notes: string | null
   createdAt: Date | null
@@ -48,6 +50,8 @@ export type FormulationMaxAggregateOutputType = {
   id: string | null
   name: string | null
   purpose: string | null
+  status: string | null
+  melissaApproved: boolean | null
   totalVolumeMl: number | null
   notes: string | null
   createdAt: Date | null
@@ -58,6 +62,8 @@ export type FormulationCountAggregateOutputType = {
   id: number
   name: number
   purpose: number
+  status: number
+  melissaApproved: number
   totalVolumeMl: number
   notes: number
   createdAt: number
@@ -78,6 +84,8 @@ export type FormulationMinAggregateInputType = {
   id?: true
   name?: true
   purpose?: true
+  status?: true
+  melissaApproved?: true
   totalVolumeMl?: true
   notes?: true
   createdAt?: true
@@ -88,6 +96,8 @@ export type FormulationMaxAggregateInputType = {
   id?: true
   name?: true
   purpose?: true
+  status?: true
+  melissaApproved?: true
   totalVolumeMl?: true
   notes?: true
   createdAt?: true
@@ -98,6 +108,8 @@ export type FormulationCountAggregateInputType = {
   id?: true
   name?: true
   purpose?: true
+  status?: true
+  melissaApproved?: true
   totalVolumeMl?: true
   notes?: true
   createdAt?: true
@@ -195,6 +207,8 @@ export type FormulationGroupByOutputType = {
   id: string
   name: string
   purpose: string | null
+  status: string
+  melissaApproved: boolean
   totalVolumeMl: number | null
   notes: string | null
   createdAt: Date
@@ -228,6 +242,8 @@ export type FormulationWhereInput = {
   id?: Prisma.StringFilter<"Formulation"> | string
   name?: Prisma.StringFilter<"Formulation"> | string
   purpose?: Prisma.StringNullableFilter<"Formulation"> | string | null
+  status?: Prisma.StringFilter<"Formulation"> | string
+  melissaApproved?: Prisma.BoolFilter<"Formulation"> | boolean
   totalVolumeMl?: Prisma.FloatNullableFilter<"Formulation"> | number | null
   notes?: Prisma.StringNullableFilter<"Formulation"> | string | null
   createdAt?: Prisma.DateTimeFilter<"Formulation"> | Date | string
@@ -241,6 +257,8 @@ export type FormulationOrderByWithRelationInput = {
   id?: Prisma.SortOrder
   name?: Prisma.SortOrder
   purpose?: Prisma.SortOrderInput | Prisma.SortOrder
+  status?: Prisma.SortOrder
+  melissaApproved?: Prisma.SortOrder
   totalVolumeMl?: Prisma.SortOrderInput | Prisma.SortOrder
   notes?: Prisma.SortOrderInput | Prisma.SortOrder
   createdAt?: Prisma.SortOrder
@@ -257,6 +275,8 @@ export type FormulationWhereUniqueInput = Prisma.AtLeast<{
   NOT?: Prisma.FormulationWhereInput | Prisma.FormulationWhereInput[]
   name?: Prisma.StringFilter<"Formulation"> | string
   purpose?: Prisma.StringNullableFilter<"Formulation"> | string | null
+  status?: Prisma.StringFilter<"Formulation"> | string
+  melissaApproved?: Prisma.BoolFilter<"Formulation"> | boolean
   totalVolumeMl?: Prisma.FloatNullableFilter<"Formulation"> | number | null
   notes?: Prisma.StringNullableFilter<"Formulation"> | string | null
   createdAt?: Prisma.DateTimeFilter<"Formulation"> | Date | string
@@ -270,6 +290,8 @@ export type FormulationOrderByWithAggregationInput = {
   id?: Prisma.SortOrder
   name?: Prisma.SortOrder
   purpose?: Prisma.SortOrderInput | Prisma.SortOrder
+  status?: Prisma.SortOrder
+  melissaApproved?: Prisma.SortOrder
   totalVolumeMl?: Prisma.SortOrderInput | Prisma.SortOrder
   notes?: Prisma.SortOrderInput | Prisma.SortOrder
   createdAt?: Prisma.SortOrder
@@ -288,6 +310,8 @@ export type FormulationScalarWhereWithAggregatesInput = {
   id?: Prisma.StringWithAggregatesFilter<"Formulation"> | string
   name?: Prisma.StringWithAggregatesFilter<"Formulation"> | string
   purpose?: Prisma.StringNullableWithAggregatesFilter<"Formulation"> | string | null
+  status?: Prisma.StringWithAggregatesFilter<"Formulation"> | string
+  melissaApproved?: Prisma.BoolWithAggregatesFilter<"Formulation"> | boolean
   totalVolumeMl?: Prisma.FloatNullableWithAggregatesFilter<"Formulation"> | number | null
   notes?: Prisma.StringNullableWithAggregatesFilter<"Formulation"> | string | null
   createdAt?: Prisma.DateTimeWithAggregatesFilter<"Formulation"> | Date | string
@@ -298,6 +322,8 @@ export type FormulationCreateInput = {
   id?: string
   name: string
   purpose?: string | null
+  status?: string
+  melissaApproved?: boolean
   totalVolumeMl?: number | null
   notes?: string | null
   createdAt?: Date | string
@@ -311,6 +337,8 @@ export type FormulationUncheckedCreateInput = {
   id?: string
   name: string
   purpose?: string | null
+  status?: string
+  melissaApproved?: boolean
   totalVolumeMl?: number | null
   notes?: string | null
   createdAt?: Date | string
@@ -324,6 +352,8 @@ export type FormulationUpdateInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   name?: Prisma.StringFieldUpdateOperationsInput | string
   purpose?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  status?: Prisma.StringFieldUpdateOperationsInput | string
+  melissaApproved?: Prisma.BoolFieldUpdateOperationsInput | boolean
   totalVolumeMl?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
   notes?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -337,6 +367,8 @@ export type FormulationUncheckedUpdateInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   name?: Prisma.StringFieldUpdateOperationsInput | string
   purpose?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  status?: Prisma.StringFieldUpdateOperationsInput | string
+  melissaApproved?: Prisma.BoolFieldUpdateOperationsInput | boolean
   totalVolumeMl?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
   notes?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -350,6 +382,8 @@ export type FormulationCreateManyInput = {
   id?: string
   name: string
   purpose?: string | null
+  status?: string
+  melissaApproved?: boolean
   totalVolumeMl?: number | null
   notes?: string | null
   createdAt?: Date | string
@@ -360,6 +394,8 @@ export type FormulationUpdateManyMutationInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   name?: Prisma.StringFieldUpdateOperationsInput | string
   purpose?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  status?: Prisma.StringFieldUpdateOperationsInput | string
+  melissaApproved?: Prisma.BoolFieldUpdateOperationsInput | boolean
   totalVolumeMl?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
   notes?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -370,6 +406,8 @@ export type FormulationUncheckedUpdateManyInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   name?: Prisma.StringFieldUpdateOperationsInput | string
   purpose?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  status?: Prisma.StringFieldUpdateOperationsInput | string
+  melissaApproved?: Prisma.BoolFieldUpdateOperationsInput | boolean
   totalVolumeMl?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
   notes?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -380,6 +418,8 @@ export type FormulationCountOrderByAggregateInput = {
   id?: Prisma.SortOrder
   name?: Prisma.SortOrder
   purpose?: Prisma.SortOrder
+  status?: Prisma.SortOrder
+  melissaApproved?: Prisma.SortOrder
   totalVolumeMl?: Prisma.SortOrder
   notes?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
@@ -394,6 +434,8 @@ export type FormulationMaxOrderByAggregateInput = {
   id?: Prisma.SortOrder
   name?: Prisma.SortOrder
   purpose?: Prisma.SortOrder
+  status?: Prisma.SortOrder
+  melissaApproved?: Prisma.SortOrder
   totalVolumeMl?: Prisma.SortOrder
   notes?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
@@ -404,6 +446,8 @@ export type FormulationMinOrderByAggregateInput = {
   id?: Prisma.SortOrder
   name?: Prisma.SortOrder
   purpose?: Prisma.SortOrder
+  status?: Prisma.SortOrder
+  melissaApproved?: Prisma.SortOrder
   totalVolumeMl?: Prisma.SortOrder
   notes?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
@@ -417,6 +461,10 @@ export type FormulationSumOrderByAggregateInput = {
 export type FormulationScalarRelationFilter = {
   is?: Prisma.FormulationWhereInput
   isNot?: Prisma.FormulationWhereInput
+}
+
+export type BoolFieldUpdateOperationsInput = {
+  set?: boolean
 }
 
 export type NullableFloatFieldUpdateOperationsInput = {
@@ -473,6 +521,8 @@ export type FormulationCreateWithoutCarrierOilsInput = {
   id?: string
   name: string
   purpose?: string | null
+  status?: string
+  melissaApproved?: boolean
   totalVolumeMl?: number | null
   notes?: string | null
   createdAt?: Date | string
@@ -485,6 +535,8 @@ export type FormulationUncheckedCreateWithoutCarrierOilsInput = {
   id?: string
   name: string
   purpose?: string | null
+  status?: string
+  melissaApproved?: boolean
   totalVolumeMl?: number | null
   notes?: string | null
   createdAt?: Date | string
@@ -513,6 +565,8 @@ export type FormulationUpdateWithoutCarrierOilsInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   name?: Prisma.StringFieldUpdateOperationsInput | string
   purpose?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  status?: Prisma.StringFieldUpdateOperationsInput | string
+  melissaApproved?: Prisma.BoolFieldUpdateOperationsInput | boolean
   totalVolumeMl?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
   notes?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -525,6 +579,8 @@ export type FormulationUncheckedUpdateWithoutCarrierOilsInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   name?: Prisma.StringFieldUpdateOperationsInput | string
   purpose?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  status?: Prisma.StringFieldUpdateOperationsInput | string
+  melissaApproved?: Prisma.BoolFieldUpdateOperationsInput | boolean
   totalVolumeMl?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
   notes?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -537,6 +593,8 @@ export type FormulationCreateWithoutEssentialOilsInput = {
   id?: string
   name: string
   purpose?: string | null
+  status?: string
+  melissaApproved?: boolean
   totalVolumeMl?: number | null
   notes?: string | null
   createdAt?: Date | string
@@ -549,6 +607,8 @@ export type FormulationUncheckedCreateWithoutEssentialOilsInput = {
   id?: string
   name: string
   purpose?: string | null
+  status?: string
+  melissaApproved?: boolean
   totalVolumeMl?: number | null
   notes?: string | null
   createdAt?: Date | string
@@ -577,6 +637,8 @@ export type FormulationUpdateWithoutEssentialOilsInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   name?: Prisma.StringFieldUpdateOperationsInput | string
   purpose?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  status?: Prisma.StringFieldUpdateOperationsInput | string
+  melissaApproved?: Prisma.BoolFieldUpdateOperationsInput | boolean
   totalVolumeMl?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
   notes?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -589,6 +651,8 @@ export type FormulationUncheckedUpdateWithoutEssentialOilsInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   name?: Prisma.StringFieldUpdateOperationsInput | string
   purpose?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  status?: Prisma.StringFieldUpdateOperationsInput | string
+  melissaApproved?: Prisma.BoolFieldUpdateOperationsInput | boolean
   totalVolumeMl?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
   notes?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -601,6 +665,8 @@ export type FormulationCreateWithoutTestLogsInput = {
   id?: string
   name: string
   purpose?: string | null
+  status?: string
+  melissaApproved?: boolean
   totalVolumeMl?: number | null
   notes?: string | null
   createdAt?: Date | string
@@ -613,6 +679,8 @@ export type FormulationUncheckedCreateWithoutTestLogsInput = {
   id?: string
   name: string
   purpose?: string | null
+  status?: string
+  melissaApproved?: boolean
   totalVolumeMl?: number | null
   notes?: string | null
   createdAt?: Date | string
@@ -641,6 +709,8 @@ export type FormulationUpdateWithoutTestLogsInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   name?: Prisma.StringFieldUpdateOperationsInput | string
   purpose?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  status?: Prisma.StringFieldUpdateOperationsInput | string
+  melissaApproved?: Prisma.BoolFieldUpdateOperationsInput | boolean
   totalVolumeMl?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
   notes?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -653,6 +723,8 @@ export type FormulationUncheckedUpdateWithoutTestLogsInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   name?: Prisma.StringFieldUpdateOperationsInput | string
   purpose?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  status?: Prisma.StringFieldUpdateOperationsInput | string
+  melissaApproved?: Prisma.BoolFieldUpdateOperationsInput | boolean
   totalVolumeMl?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
   notes?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -714,6 +786,8 @@ export type FormulationSelect<ExtArgs extends runtime.Types.Extensions.InternalA
   id?: boolean
   name?: boolean
   purpose?: boolean
+  status?: boolean
+  melissaApproved?: boolean
   totalVolumeMl?: boolean
   notes?: boolean
   createdAt?: boolean
@@ -728,6 +802,8 @@ export type FormulationSelectCreateManyAndReturn<ExtArgs extends runtime.Types.E
   id?: boolean
   name?: boolean
   purpose?: boolean
+  status?: boolean
+  melissaApproved?: boolean
   totalVolumeMl?: boolean
   notes?: boolean
   createdAt?: boolean
@@ -738,6 +814,8 @@ export type FormulationSelectUpdateManyAndReturn<ExtArgs extends runtime.Types.E
   id?: boolean
   name?: boolean
   purpose?: boolean
+  status?: boolean
+  melissaApproved?: boolean
   totalVolumeMl?: boolean
   notes?: boolean
   createdAt?: boolean
@@ -748,13 +826,15 @@ export type FormulationSelectScalar = {
   id?: boolean
   name?: boolean
   purpose?: boolean
+  status?: boolean
+  melissaApproved?: boolean
   totalVolumeMl?: boolean
   notes?: boolean
   createdAt?: boolean
   updatedAt?: boolean
 }
 
-export type FormulationOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "name" | "purpose" | "totalVolumeMl" | "notes" | "createdAt" | "updatedAt", ExtArgs["result"]["formulation"]>
+export type FormulationOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "name" | "purpose" | "status" | "melissaApproved" | "totalVolumeMl" | "notes" | "createdAt" | "updatedAt", ExtArgs["result"]["formulation"]>
 export type FormulationInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   carrierOils?: boolean | Prisma.Formulation$carrierOilsArgs<ExtArgs>
   essentialOils?: boolean | Prisma.Formulation$essentialOilsArgs<ExtArgs>
@@ -775,6 +855,8 @@ export type $FormulationPayload<ExtArgs extends runtime.Types.Extensions.Interna
     id: string
     name: string
     purpose: string | null
+    status: string
+    melissaApproved: boolean
     totalVolumeMl: number | null
     notes: string | null
     createdAt: Date
@@ -1208,6 +1290,8 @@ export interface FormulationFieldRefs {
   readonly id: Prisma.FieldRef<"Formulation", 'String'>
   readonly name: Prisma.FieldRef<"Formulation", 'String'>
   readonly purpose: Prisma.FieldRef<"Formulation", 'String'>
+  readonly status: Prisma.FieldRef<"Formulation", 'String'>
+  readonly melissaApproved: Prisma.FieldRef<"Formulation", 'Boolean'>
   readonly totalVolumeMl: Prisma.FieldRef<"Formulation", 'Float'>
   readonly notes: Prisma.FieldRef<"Formulation", 'String'>
   readonly createdAt: Prisma.FieldRef<"Formulation", 'DateTime'>

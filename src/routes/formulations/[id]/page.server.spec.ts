@@ -107,6 +107,39 @@ describe('Formulation update action', () => {
 		expect(updated!.totalVolumeMl).toBe(30);
 	});
 
+	it('updates status field', async () => {
+		const formula = await seedFormulation(testDb, { name: 'Test' });
+
+		const { actions } = await import('./+page.server');
+		await actions.update({
+			request: mockFormDataRequest({
+				name: 'Test',
+				status: 'cottonball'
+			}),
+			params: { id: formula.id }
+		} as any);
+
+		const updated = await testDb.formulation.findUnique({ where: { id: formula.id } });
+		expect(updated!.status).toBe('cottonball');
+	});
+
+	it('defaults status to not-tested when empty', async () => {
+		const formula = await seedFormulation(testDb, { name: 'Test' });
+		await testDb.formulation.update({
+			where: { id: formula.id },
+			data: { status: 'final' }
+		});
+
+		const { actions } = await import('./+page.server');
+		await actions.update({
+			request: mockFormDataRequest({ name: 'Test', status: '' }),
+			params: { id: formula.id }
+		} as any);
+
+		const updated = await testDb.formulation.findUnique({ where: { id: formula.id } });
+		expect(updated!.status).toBe('not-tested');
+	});
+
 	it('fails when name is missing', async () => {
 		const formula = await seedFormulation(testDb, { name: 'Test' });
 
@@ -117,6 +150,47 @@ describe('Formulation update action', () => {
 		} as any);
 
 		expect(result).toHaveProperty('status', 400);
+	});
+});
+
+describe('Formulation toggleMelissaApproved action', () => {
+	it('flips false to true', async () => {
+		const formula = await seedFormulation(testDb, { name: 'Test' });
+
+		const { actions } = await import('./+page.server');
+		const result = await actions.toggleMelissaApproved({
+			params: { id: formula.id }
+		} as any);
+
+		expect(result).toEqual({ success: true });
+
+		const updated = await testDb.formulation.findUnique({ where: { id: formula.id } });
+		expect(updated!.melissaApproved).toBe(true);
+	});
+
+	it('flips true to false', async () => {
+		const formula = await seedFormulation(testDb, { name: 'Test' });
+		await testDb.formulation.update({
+			where: { id: formula.id },
+			data: { melissaApproved: true }
+		});
+
+		const { actions } = await import('./+page.server');
+		await actions.toggleMelissaApproved({
+			params: { id: formula.id }
+		} as any);
+
+		const updated = await testDb.formulation.findUnique({ where: { id: formula.id } });
+		expect(updated!.melissaApproved).toBe(false);
+	});
+
+	it('returns 404 for non-existent formulation', async () => {
+		const { actions } = await import('./+page.server');
+		const result = await actions.toggleMelissaApproved({
+			params: { id: 'nonexistent' }
+		} as any);
+
+		expect(result).toHaveProperty('status', 404);
 	});
 });
 

@@ -58,7 +58,8 @@ export const ModelName = {
   FormulationCarrierOil: 'FormulationCarrierOil',
   FormulationEssentialOil: 'FormulationEssentialOil',
   TestLog: 'TestLog',
-  DiaryEntry: 'DiaryEntry'
+  DiaryEntry: 'DiaryEntry',
+  EssentialOilWishlist: 'EssentialOilWishlist'
 } as const
 
 export type ModelName = (typeof ModelName)[keyof typeof ModelName]
@@ -119,6 +120,8 @@ export const FormulationScalarFieldEnum = {
   id: 'id',
   name: 'name',
   purpose: 'purpose',
+  status: 'status',
+  melissaApproved: 'melissaApproved',
   totalVolumeMl: 'totalVolumeMl',
   notes: 'notes',
   createdAt: 'createdAt',
@@ -170,6 +173,21 @@ export const DiaryEntryScalarFieldEnum = {
 } as const
 
 export type DiaryEntryScalarFieldEnum = (typeof DiaryEntryScalarFieldEnum)[keyof typeof DiaryEntryScalarFieldEnum]
+
+
+export const EssentialOilWishlistScalarFieldEnum = {
+  id: 'id',
+  name: 'name',
+  scentCategory: 'scentCategory',
+  notes: 'notes',
+  priority: 'priority',
+  purchaseUrl: 'purchaseUrl',
+  purchased: 'purchased',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+} as const
+
+export type EssentialOilWishlistScalarFieldEnum = (typeof EssentialOilWishlistScalarFieldEnum)[keyof typeof EssentialOilWishlistScalarFieldEnum]
 
 
 export const SortOrder = {

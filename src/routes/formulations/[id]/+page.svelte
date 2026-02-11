@@ -14,6 +14,7 @@
 	// Editing states - initialized empty, synced via $effect
 	let editName = $state('');
 	let editPurpose = $state('');
+	let editStatus = $state('not-tested');
 	let editVolume = $state(30);
 	let editNotes = $state('');
 
@@ -26,6 +27,7 @@
 		if (isEditing) {
 			editName = data.formulation.name;
 			editPurpose = data.formulation.purpose ?? '';
+			editStatus = data.formulation.status;
 			editVolume = data.formulation.totalVolumeMl ?? 30;
 			editNotes = data.formulation.notes ?? '';
 		}
@@ -64,6 +66,26 @@
 			hour: 'numeric',
 			minute: '2-digit'
 		});
+	}
+
+	function getStatusBadgeClass(status: string): string {
+		const map: Record<string, string> = {
+			'not-tested': 'badge-status-untested',
+			cottonball: 'badge-status-cottonball',
+			carrier: 'badge-status-carrier',
+			final: 'badge-status-final'
+		};
+		return map[status] ?? 'badge-status-untested';
+	}
+
+	function getStatusLabel(status: string): string {
+		const map: Record<string, string> = {
+			'not-tested': 'Not Tested',
+			cottonball: 'Cottonball',
+			carrier: 'Carrier',
+			final: 'Final'
+		};
+		return map[status] ?? status;
 	}
 
 	function getScentBadgeClass(category: string | null): string {
@@ -131,6 +153,7 @@
 		isEditing = false;
 		editName = data.formulation.name;
 		editPurpose = data.formulation.purpose ?? '';
+		editStatus = data.formulation.status;
 		editVolume = data.formulation.totalVolumeMl ?? 30;
 		editNotes = data.formulation.notes ?? '';
 	}
@@ -157,9 +180,15 @@
 				class="font-display text-sm text-amber-600 transition hover:text-amber-400"
 				>&larr; Formulary</a
 			>
-			<h1 class="mt-1 font-display text-2xl font-bold tracking-wide text-parchment-200 lg:text-3xl">
-				{data.formulation.name}
-			</h1>
+			<div class="mt-1 flex items-center gap-2">
+				<h1 class="font-display text-2xl font-bold tracking-wide text-parchment-200 lg:text-3xl">
+					{data.formulation.name}
+				</h1>
+				{#if data.formulation.melissaApproved}
+					<i class="fa-duotone fa-solid fa-heart text-sm text-rose-400" title="Melissa Approved"
+					></i>
+				{/if}
+			</div>
 			<div class="mt-1 flex flex-wrap items-center gap-2 text-sm text-parchment-600">
 				{#if data.formulation.purpose}
 					<span
@@ -168,6 +197,13 @@
 						{data.formulation.purpose}
 					</span>
 				{/if}
+				<span
+					class="rounded-full px-2 py-0.5 text-xs font-medium {getStatusBadgeClass(
+						data.formulation.status
+					)}"
+				>
+					{getStatusLabel(data.formulation.status)}
+				</span>
 				{#if data.formulation.totalVolumeMl}
 					<span>{data.formulation.totalVolumeMl}ml batch</span>
 				{/if}
@@ -175,6 +211,22 @@
 			</div>
 		</div>
 		<div class="flex gap-2">
+			<form method="POST" action="?/toggleMelissaApproved" use:enhance>
+				<button
+					type="submit"
+					class="scoop-sm p-2 transition {data.formulation.melissaApproved
+						? 'bg-rose-500/15 text-rose-400 hover:bg-rose-500/25'
+						: 'bg-ink-600 text-parchment-500 hover:bg-ink-500 hover:text-rose-400'}"
+					aria-label="{data.formulation.melissaApproved ? 'Remove' : 'Add'} Melissa approval"
+					title="{data.formulation.melissaApproved ? 'Remove' : 'Add'} Melissa Approved"
+				>
+					<i
+						class="fa-duotone fa-solid fa-heart {data.formulation.melissaApproved
+							? 'text-rose-400'
+							: 'opacity-40'}"
+					></i>
+				</button>
+			</form>
 			<button
 				onclick={() => (isEditing = true)}
 				class="scoop-sm bg-ink-600 p-2 text-parchment-500 transition hover:bg-ink-500 hover:text-amber-400"
@@ -239,19 +291,31 @@
 							</select>
 						</div>
 						<div>
-							<label for="volume" class="mb-1 block text-sm font-medium text-parchment-400">
-								Batch (ml)
+							<label for="status" class="mb-1 block text-sm font-medium text-parchment-400">
+								Status
 							</label>
-							<input
-								type="number"
-								id="volume"
-								name="totalVolumeMl"
-								bind:value={editVolume}
-								min="5"
-								max="100"
-								class="w-full"
-							/>
+							<select id="status" name="status" bind:value={editStatus} class="w-full">
+								<option value="not-tested">Not Tested</option>
+								<option value="cottonball">Cottonball Tested</option>
+								<option value="carrier">Carrier Oil Tested</option>
+								<option value="final">Final</option>
+							</select>
 						</div>
+					</div>
+
+					<div>
+						<label for="volume" class="mb-1 block text-sm font-medium text-parchment-400">
+							Batch Size (ml)
+						</label>
+						<input
+							type="number"
+							id="volume"
+							name="totalVolumeMl"
+							bind:value={editVolume}
+							min="5"
+							max="100"
+							class="w-full"
+						/>
 					</div>
 
 					<div>

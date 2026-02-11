@@ -36,6 +36,7 @@ export const actions: Actions = {
 		const formData = await request.formData();
 		const name = formData.get('name')?.toString().trim();
 		const purpose = formData.get('purpose')?.toString();
+		const status = formData.get('status')?.toString();
 		const totalVolumeMl = formData.get('totalVolumeMl')?.toString();
 		const notes = formData.get('notes')?.toString().trim();
 
@@ -48,6 +49,7 @@ export const actions: Actions = {
 			data: {
 				name,
 				purpose: purpose || null,
+				status: status || 'not-tested',
 				totalVolumeMl: totalVolumeMl ? parseFloat(totalVolumeMl) : null,
 				notes: notes || null
 			}
@@ -138,6 +140,24 @@ export const actions: Actions = {
 		await db.formulation.update({
 			where: { id: params.id },
 			data: { updatedAt: new Date() }
+		});
+
+		return { success: true };
+	},
+
+	toggleMelissaApproved: async ({ params }) => {
+		const formulation = await db.formulation.findUnique({
+			where: { id: params.id },
+			select: { melissaApproved: true }
+		});
+
+		if (!formulation) {
+			return fail(404, { error: 'Formula not found' });
+		}
+
+		await db.formulation.update({
+			where: { id: params.id },
+			data: { melissaApproved: !formulation.melissaApproved }
 		});
 
 		return { success: true };

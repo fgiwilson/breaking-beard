@@ -78,6 +78,69 @@ describe('Formulations list load', () => {
 		expect(result.formulations).toHaveLength(2);
 	});
 
+	it('filters by status', async () => {
+		await seedFormulation(testDb, { name: 'Untested' });
+		const f2 = await seedFormulation(testDb, { name: 'Final' });
+		await testDb.formulation.update({
+			where: { id: f2.id },
+			data: { status: 'final' }
+		});
+
+		const { load } = await import('./+page.server');
+		const result = (await load({ url: mockUrl({ status: 'final' }) } as any))!;
+
+		expect(result.formulations).toHaveLength(1);
+		expect(result.formulations[0].name).toBe('Final');
+		expect(result.statusFilter).toBe('final');
+	});
+
+	it('filters by melissaApproved', async () => {
+		const approved = await seedFormulation(testDb, { name: 'Approved' });
+		await testDb.formulation.update({
+			where: { id: approved.id },
+			data: { melissaApproved: true }
+		});
+		await seedFormulation(testDb, { name: 'Not Approved' });
+
+		const { load } = await import('./+page.server');
+		const result = (await load({ url: mockUrl({ melissaApproved: 'true' }) } as any))!;
+
+		expect(result.formulations).toHaveLength(1);
+		expect(result.formulations[0].name).toBe('Approved');
+		expect(result.melissaFilter).toBe(true);
+	});
+
+	it('combines purpose, status, and melissaApproved filters', async () => {
+		const match = await seedFormulation(testDb, { name: 'Match', purpose: 'morning' });
+		await testDb.formulation.update({
+			where: { id: match.id },
+			data: { status: 'final', melissaApproved: true }
+		});
+
+		const noMatch1 = await seedFormulation(testDb, { name: 'Wrong Purpose', purpose: 'evening' });
+		await testDb.formulation.update({
+			where: { id: noMatch1.id },
+			data: { status: 'final', melissaApproved: true }
+		});
+
+		const noMatch2 = await seedFormulation(testDb, {
+			name: 'Wrong Status',
+			purpose: 'morning'
+		});
+		await testDb.formulation.update({
+			where: { id: noMatch2.id },
+			data: { status: 'cottonball', melissaApproved: true }
+		});
+
+		const { load } = await import('./+page.server');
+		const result = (await load({
+			url: mockUrl({ purpose: 'morning', status: 'final', melissaApproved: 'true' })
+		} as any))!;
+
+		expect(result.formulations).toHaveLength(1);
+		expect(result.formulations[0].name).toBe('Match');
+	});
+
 	it('orders by updatedAt descending', async () => {
 		const f1 = await seedFormulation(testDb, { name: 'Older' });
 		// Touch f1 to make it older by creating a newer one after
