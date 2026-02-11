@@ -37,6 +37,8 @@ CREATE TABLE "Formulation" (
     "id" TEXT NOT NULL PRIMARY KEY,
     "name" TEXT NOT NULL,
     "purpose" TEXT,
+    "status" TEXT NOT NULL DEFAULT 'not-tested',
+    "melissaApproved" BOOLEAN NOT NULL DEFAULT 0,
     "totalVolumeMl" REAL,
     "notes" TEXT,
     "createdAt" DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
@@ -75,6 +77,18 @@ CREATE TABLE "DiaryEntry" (
     "createdAt" DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
     "updatedAt" DATETIME NOT NULL
 );
+CREATE TABLE "EssentialOilWishlist" (
+    "id" TEXT NOT NULL PRIMARY KEY,
+    "name" TEXT NOT NULL,
+    "scentCategory" TEXT,
+    "notes" TEXT,
+    "priority" INTEGER NOT NULL DEFAULT 0,
+    "purchaseUrl" TEXT,
+    "purchased" BOOLEAN NOT NULL DEFAULT 0,
+    "createdAt" DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    "updatedAt" DATETIME NOT NULL
+);
+CREATE UNIQUE INDEX "EssentialOilWishlist_name_key" ON "EssentialOilWishlist"("name");
 CREATE UNIQUE INDEX "CarrierOil_name_key" ON "CarrierOil"("name");
 CREATE UNIQUE INDEX "EssentialOil_name_key" ON "EssentialOil"("name");
 CREATE UNIQUE INDEX "EssentialOilPairing_oil1Id_oil2Id_key" ON "EssentialOilPairing"("oil1Id", "oil2Id");
@@ -188,6 +202,29 @@ export async function seedDiaryEntry(
 		data: {
 			content: overrides.content ?? 'Diary content',
 			title: overrides.title ?? null
+		}
+	});
+}
+
+export async function seedWishlistItem(
+	db: PrismaClient,
+	overrides: Partial<{
+		name: string;
+		scentCategory: string;
+		notes: string;
+		priority: number;
+		purchaseUrl: string;
+		purchased: boolean;
+	}> = {}
+) {
+	return db.essentialOilWishlist.create({
+		data: {
+			name: overrides.name ?? `Wishlist ${Date.now()}-${Math.random().toString(36).slice(2, 6)}`,
+			scentCategory: overrides.scentCategory ?? null,
+			notes: overrides.notes ?? null,
+			priority: overrides.priority ?? 0,
+			purchaseUrl: overrides.purchaseUrl ?? null,
+			purchased: overrides.purchased ?? false
 		}
 	});
 }

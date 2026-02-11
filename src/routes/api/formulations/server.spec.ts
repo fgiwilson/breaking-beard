@@ -202,6 +202,39 @@ describe('POST /api/formulations', () => {
 
 		expect(response.status).toBe(400);
 	});
+
+	it('creates with explicit status', async () => {
+		const carrier = await seedCarrierOil(testDb, { name: 'Jojoba' });
+
+		const { POST } = await import('./+server');
+		const response = await POST({
+			request: mockJsonRequest({
+				name: 'With Status',
+				status: 'cottonball',
+				carrierOils: [{ id: carrier.id, percentage: 100 }]
+			})
+		} as any);
+
+		const body = await response.json();
+		const formula = await testDb.formulation.findUnique({ where: { id: body.id } });
+		expect(formula!.status).toBe('cottonball');
+	});
+
+	it('defaults status to not-tested when omitted', async () => {
+		const carrier = await seedCarrierOil(testDb, { name: 'Jojoba' });
+
+		const { POST } = await import('./+server');
+		const response = await POST({
+			request: mockJsonRequest({
+				name: 'No Status',
+				carrierOils: [{ id: carrier.id, percentage: 100 }]
+			})
+		} as any);
+
+		const body = await response.json();
+		const formula = await testDb.formulation.findUnique({ where: { id: body.id } });
+		expect(formula!.status).toBe('not-tested');
+	});
 });
 
 describe('GET /api/formulations', () => {

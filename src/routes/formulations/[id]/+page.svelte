@@ -185,7 +185,8 @@
 					{data.formulation.name}
 				</h1>
 				{#if data.formulation.melissaApproved}
-					<i class="fa-solid fa-heart text-sm text-rose-400" title="Melissa Approved"></i>
+					<i class="fa-duotone fa-solid fa-heart text-sm text-rose-400" title="Melissa Approved"
+					></i>
 				{/if}
 			</div>
 			<div class="mt-1 flex flex-wrap items-center gap-2 text-sm text-parchment-600">
@@ -219,7 +220,11 @@
 					aria-label="{data.formulation.melissaApproved ? 'Remove' : 'Add'} Melissa approval"
 					title="{data.formulation.melissaApproved ? 'Remove' : 'Add'} Melissa Approved"
 				>
-					<i class="fa-heart {data.formulation.melissaApproved ? 'fa-solid' : 'fa-regular'}"></i>
+					<i
+						class="fa-duotone fa-solid fa-heart {data.formulation.melissaApproved
+							? 'text-rose-400'
+							: 'opacity-40'}"
+					></i>
 				</button>
 			</form>
 			<button

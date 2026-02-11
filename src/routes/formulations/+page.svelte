@@ -116,7 +116,7 @@
 		<div class="flex flex-wrap gap-2">
 			<a
 				href={filterHref('status', null)}
-				class="scoop-sm px-3 py-1 text-xs font-medium transition"
+				class="scoop-sm px-4 py-1.5 text-sm font-medium transition"
 				class:bg-amber-600={!data.statusFilter}
 				class:text-parchment-100={!data.statusFilter}
 				class:bg-ink-600={data.statusFilter}
@@ -127,7 +127,7 @@
 			{#each statuses as s (s.value)}
 				<a
 					href={filterHref('status', s.value)}
-					class="scoop-sm px-3 py-1 text-xs font-medium transition"
+					class="scoop-sm px-4 py-1.5 text-sm font-medium transition"
 					class:bg-amber-600={data.statusFilter === s.value}
 					class:text-parchment-100={data.statusFilter === s.value}
 					class:bg-ink-600={data.statusFilter !== s.value}
@@ -141,11 +141,12 @@
 
 			<a
 				href={filterHref('melissaApproved', data.melissaFilter ? null : 'true')}
-				class="scoop-sm flex items-center gap-1.5 px-3 py-1 text-xs font-medium transition {data.melissaFilter
+				class="scoop-sm flex items-center gap-1.5 px-4 py-1.5 text-sm font-medium transition {data.melissaFilter
 					? 'bg-rose-500/20 text-rose-400'
 					: 'bg-ink-600 text-parchment-500'}"
 			>
-				<i class="fa-{data.melissaFilter ? 'solid' : 'regular'} fa-heart text-[0.65rem]"></i>
+				<i class="fa-duotone fa-solid fa-heart text-xs {data.melissaFilter ? 'text-rose-400' : ''}"
+				></i>
 				Melissa Approved
 			</a>
 		</div>
@@ -174,7 +175,9 @@
 									{formula.name}
 								</h3>
 								{#if formula.melissaApproved}
-									<i class="fa-solid fa-heart text-[0.65rem] text-rose-400" title="Melissa Approved"
+									<i
+										class="fa-duotone fa-solid fa-heart text-xs text-rose-400"
+										title="Melissa Approved"
 									></i>
 								{/if}
 							</div>
