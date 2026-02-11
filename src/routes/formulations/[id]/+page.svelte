@@ -162,7 +162,9 @@
 			</h1>
 			<div class="mt-1 flex flex-wrap items-center gap-2 text-sm text-parchment-600">
 				{#if data.formulation.purpose}
-					<span class="scoop-sm border border-amber-500/15 bg-ink-600 px-2 py-0.5 text-xs capitalize">
+					<span
+						class="scoop-xs border border-amber-500/15 bg-ink-600 px-2 py-0.5 text-xs capitalize"
+					>
 						{data.formulation.purpose}
 					</span>
 				{/if}
@@ -193,7 +195,10 @@
 	<!-- Edit Modal -->
 	{#if isEditing}
 		<div class="fixed inset-0 z-50 flex items-center justify-center bg-ink-950/80 p-4">
-			<div class="scoop-lg w-full max-w-md overflow-y-auto border border-amber-500/15 bg-ink-700 p-6" style="max-height: 90vh;">
+			<div
+				class="scoop-lg w-full max-w-md overflow-y-auto border border-amber-500/15 bg-ink-700 p-6"
+				style="max-height: 90vh;"
+			>
 				<h2 class="mb-4 font-display text-xl font-semibold text-parchment-200">Edit Formula</h2>
 
 				<form
@@ -250,16 +255,16 @@
 					</div>
 
 					<div>
-						<label for="notes" class="mb-1 block text-sm font-medium text-parchment-400">Notes</label>
+						<label for="notes" class="mb-1 block text-sm font-medium text-parchment-400"
+							>Notes</label
+						>
 						<textarea id="notes" name="notes" bind:value={editNotes} rows="3" class="w-full"
 						></textarea>
 					</div>
 
 					<div class="flex gap-3">
 						<button type="submit" class="btn-vintage flex-1">Save</button>
-						<button type="button" onclick={cancelEdit} class="btn-outline flex-1">
-							Cancel
-						</button>
+						<button type="button" onclick={cancelEdit} class="btn-outline flex-1"> Cancel </button>
 					</div>
 				</form>
 			</div>
