@@ -34,7 +34,7 @@
 	<div class="flex items-end justify-between">
 		<div>
 			<h1 class="font-display text-2xl font-bold tracking-wide text-parchment-200">Journal</h1>
-			<p class="mt-1 font-display text-sm italic text-parchment-600">
+			<p class="mt-1 font-display text-sm text-parchment-600 italic">
 				Your formulation notes and observations
 			</p>
 		</div>
@@ -49,9 +49,7 @@
 	<!-- New Entry Form -->
 	{#if showForm}
 		<div class="v-card p-5">
-			<h2 class="mb-3 font-display text-lg font-semibold text-parchment-200">
-				New Journal Entry
-			</h2>
+			<h2 class="mb-3 font-display text-lg font-semibold text-parchment-200">New Journal Entry</h2>
 
 			{#if form?.error}
 				<div class="scoop-sm mb-4 bg-red-500/15 p-3 text-sm text-red-400">

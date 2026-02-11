@@ -31,6 +31,9 @@ A personal SvelteKit application for tracking DIY beard oil development, includi
 This app is built for a methodical approach to beard oil formulation development. The user:
 
 - Creates formulations with specific time-of-day applications (morning energizing vs evening calming)
+- Tracks each formula through a testing pipeline: Not Tested → Cottonball → Carrier Oil → Final
+- Tracks Melissa's approval on formulations (partner sign-off)
+- Maintains an essential oil wishlist for oils to purchase
 - Prefers understated, approachable scents over heavily masculine woody fragrances
 - Favors bergamot-forward citrus blends
 - Follows the principle that simpler formulas (3-4 oils max) work better than complex blends
@@ -50,30 +53,32 @@ Current oil inventory:
 
 ## Tech Stack
 
-| Layer      | Technology                   | Notes                                                             |
-| ---------- | ---------------------------- | ----------------------------------------------------------------- |
-| Framework  | SvelteKit + Svelte 5         | Full-stack, TypeScript, runes ($state, $props, $derived, $effect) |
-| ORM        | Prisma 7                     | Driver adapters, better-sqlite3                                   |
-| Database   | SQLite                       | File-based at project root (dev.db)                               |
-| Styling    | Tailwind CSS v4              | @theme directive, oklch colors, custom beardsman theme            |
-| AI         | Anthropic API (Claude Haiku) | Cost-effective for simple queries                                 |
-| Deployment | Fly.io or Railway            | Persistent volume for SQLite                                      |
+| Layer      | Technology                      | Notes                                                                   |
+| ---------- | ------------------------------- | ----------------------------------------------------------------------- |
+| Framework  | SvelteKit + Svelte 5            | Full-stack, TypeScript, runes ($state, $props, $derived, $effect)       |
+| ORM        | Prisma 7                        | Driver adapters, better-sqlite3                                         |
+| Database   | SQLite                          | File-based at project root (dev.db)                                     |
+| Styling    | Tailwind CSS v4                 | @theme directive, oklch colors, custom beardsman theme                  |
+| Icons      | FontAwesome Kit (Duotone/Sharp) | Loaded via kit script tag in app.html; use `fa-duotone fa-solid` prefix |
+| Testing    | Vitest                          | In-memory SQLite via test-helpers.ts                                    |
+| AI         | Anthropic API (Claude Haiku)    | Cost-effective for simple queries                                       |
+| Deployment | Coolify                         | Self-hosted, persistent volume for SQLite already configured            |
 
 ## Database Schema
 
 ```prisma
 model CarrierOil {
-  id            String   @id @default(cuid())
-  name          String   @unique
-  comedogenic   Int?     // 0-5 scale
-  absorption    String?  // fast, medium, slow
-  vitamins      String?  // e.g., "A, E"
-  texture       String?  // light, medium, heavy
-  notes         String?
-  createdAt     DateTime @default(now())
-  updatedAt     DateTime @updatedAt
+  id          String   @id @default(cuid())
+  name        String   @unique
+  comedogenic Int?     // 0-5 scale
+  absorption  String?  // fast, medium, slow
+  vitamins    String?  // e.g., "A, E"
+  texture     String?  // light, medium, heavy
+  notes       String?
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
 
-  formulations  FormulationCarrierOil[]
+  formulations FormulationCarrierOil[]
 }
 
 model EssentialOil {
@@ -87,16 +92,16 @@ model EssentialOil {
   createdAt     DateTime @default(now())
   updatedAt     DateTime @updatedAt
 
-  formulations  FormulationEssentialOil[]
-  pairings1     EssentialOilPairing[] @relation("Oil1")
-  pairings2     EssentialOilPairing[] @relation("Oil2")
+  formulations FormulationEssentialOil[]
+  pairings     EssentialOilPairing[]     @relation("PairingFrom")
+  pairedWith   EssentialOilPairing[]     @relation("PairingTo")
 }
 
 model EssentialOilPairing {
   id        String       @id @default(cuid())
-  oil1      EssentialOil @relation("Oil1", fields: [oil1Id], references: [id])
+  oil1      EssentialOil @relation("PairingFrom", fields: [oil1Id], references: [id], onDelete: Cascade)
   oil1Id    String
-  oil2      EssentialOil @relation("Oil2", fields: [oil2Id], references: [id])
+  oil2      EssentialOil @relation("PairingTo", fields: [oil2Id], references: [id], onDelete: Cascade)
   oil2Id    String
   notes     String?
   createdAt DateTime     @default(now())
@@ -106,19 +111,22 @@ model EssentialOilPairing {
 
 model DiaryEntry {
   id        String   @id @default(cuid())
+  title     String?
   content   String
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
 }
 
 model Formulation {
-  id            String   @id @default(cuid())
-  name          String
-  purpose       String?  // "morning", "evening", "all-day"
-  totalVolumeMl Float?   // target batch size
-  notes         String?
-  createdAt     DateTime @default(now())
-  updatedAt     DateTime @updatedAt
+  id              String   @id @default(cuid())
+  name            String
+  purpose         String?  // "morning", "evening", "all-day"
+  status          String   @default("not-tested") // not-tested, cottonball, carrier, final
+  melissaApproved Boolean  @default(false)
+  totalVolumeMl   Float?   // target batch size
+  notes           String?
+  createdAt       DateTime @default(now())
+  updatedAt       DateTime @updatedAt
 
   carrierOils   FormulationCarrierOil[]
   essentialOils FormulationEssentialOil[]
@@ -159,6 +167,18 @@ model TestLog {
 
   @@index([formulationId, date])
 }
+
+model EssentialOilWishlist {
+  id            String   @id @default(cuid())
+  name          String   @unique
+  scentCategory String?  // citrus, woody, floral, herbal, etc.
+  notes         String?
+  priority      Int      @default(0) // 0=low, 1=medium, 2=high
+  purchaseUrl   String?
+  purchased     Boolean  @default(false)
+  createdAt     DateTime @default(now())
+  updatedAt     DateTime @updatedAt
+}
 ```
 
 ## Route Structure
@@ -171,14 +191,14 @@ src/routes/
 ├── layout.css                      # Custom beardsman theme (Tailwind v4 @theme)
 │
 ├── formulations/
-│   ├── +page.svelte                # List all formulations (filterable by purpose)
-│   ├── +page.server.ts
+│   ├── +page.svelte                # List all formulations (filterable by purpose, status, melissaApproved)
+│   ├── +page.server.ts             # Composite filtering via query params
 │   ├── new/
 │   │   ├── +page.svelte            # Create formulation with oil selection
 │   │   └── +page.server.ts
 │   └── [id]/
-│       ├── +page.svelte            # View/edit formulation + test logs + oils
-│       └── +page.server.ts         # Actions: update, addTestLog, deleteTestLog, updateOils, delete
+│       ├── +page.svelte            # View/edit formulation + test logs + oils + status + melissa toggle
+│       └── +page.server.ts         # Actions: update, addTestLog, deleteTestLog, updateOils, delete, toggleMelissaApproved
 │
 ├── oils/
 │   ├── carrier/
@@ -186,7 +206,15 @@ src/routes/
 │   │   └── +page.server.ts
 │   └── essential/
 │       ├── +page.svelte            # Essential oil catalog with pairing management
-│       └── +page.server.ts
+│       ├── +page.server.ts
+│       └── wishlist/
+│           ├── +page.svelte        # Essential oil wishlist (purchase tracking)
+│           └── +page.server.ts     # Actions: create, update, togglePurchased, delete
+│
+├── test/
+│   └── new/
+│       ├── +page.svelte            # Global quick-add test log (select formulation + notes + rating)
+│       └── +page.server.ts         # Load formulations, create test log, redirect to formulation
 │
 ├── diary/
 │   ├── +page.svelte                # Journal entries list with add form
@@ -200,7 +228,7 @@ src/routes/
 │
 └── api/
     ├── formulations/
-    │   └── +server.ts              # POST: create formulation
+    │   └── +server.ts              # POST: create formulation (accepts optional status field)
     └── diary/
         └── +server.ts              # POST: create diary entry
 ```
@@ -269,12 +297,15 @@ The assistant is primed with:
 - [x] View formulation with calculated percentages
 - [x] Edit existing formulations (modal + inline oil editing)
 - [x] List view filterable by purpose
+- [x] Composite filtering by purpose, status, and melissa approval
+- [x] Status tracking pipeline (not-tested → cottonball → carrier → final)
+- [x] Melissa Approved toggle with duotone heart icon
 
 ### Phase 4: Test Logs ✓
 
 - [x] Add test log to formulation (with 1-5 star ratings)
 - [x] Quick-add from dashboard
-- [ ] Quick-add from global `/test/new` route
+- [x] Quick-add from global `/test/new` route (formulation selector, notes, rating, redirects to detail)
 - [x] Timeline view on formulation detail
 - [x] Rating display and filtering
 
@@ -284,6 +315,15 @@ The assistant is primed with:
 - [x] Inputs: batch size, oil names, drops per oil
 - [x] Outputs: carrier volume, drops per EO, dilution %, safety warnings
 - [x] Basic dilution % shown on formulation detail
+
+### Phase 5.5: Essential Oil Wishlist ✓
+
+- [x] Standalone wishlist at `/oils/essential/wishlist`
+- [x] CRUD with modal-based add/edit (same pattern as oil catalogs)
+- [x] Priority levels (low/medium/high), scent category badges
+- [x] Purchase URL as external link
+- [x] Purchased toggle with visual dimming/strikethrough
+- [x] Navigation link in sidebar under Ingredients
 
 ### Phase 6: AI Assistant
 
@@ -297,10 +337,9 @@ The assistant is primed with:
 ### Phase 7: Polish & Deploy
 
 - [x] Mobile responsive design (mobile-first)
-- [ ] PWA manifest for home screen install
-- [ ] Deploy to Fly.io or Railway
-- [ ] Set up persistent volume for SQLite
-- [ ] Environment variable configuration
+- [x] PWA manifest for home screen install
+- [x] Deployed to Coolify (persistent volume configured)
+- [x] Environment variable configuration (.env.example)
 
 ## Commands
 
@@ -310,8 +349,17 @@ npm run dev                 # Start dev server at http://localhost:5173
 
 # Database
 npx prisma migrate dev      # Run migrations
+npx prisma generate         # Regenerate Prisma client after schema changes
 npx prisma studio           # Visual database browser
 bunx tsx prisma/seed.ts     # Seed initial data (uses tsx, not bun, for native modules)
+
+# Testing
+npm test                    # Run all tests once (vitest --run)
+npm run test:unit           # Run tests in watch mode
+
+# Linting & Type Checking
+npm run lint                # Prettier + ESLint
+npm run check               # svelte-check (TypeScript)
 
 # Build & Deploy
 npm run build
@@ -320,12 +368,11 @@ npm run preview
 
 ## Environment Variables
 
-```env
-# Database URL is configured in prisma.config.ts, not .env
-# SQLite file is at project root: dev.db
+See `.env.example` for the full list. Key variables:
 
-# Required for AI assistant (Phase 6)
-ANTHROPIC_API_KEY="sk-ant-..."
+```env
+DATABASE_URL="file:dev.db"       # SQLite path (default: file:dev.db at project root)
+ANTHROPIC_API_KEY="sk-ant-..."   # Required for AI assistant (Phase 6)
 ```
 
 ## File Structure
@@ -337,21 +384,30 @@ breaking-beard/
 │   ├── prisma.config.ts        # Prisma 7 config (driver adapter settings)
 │   ├── seed.ts                 # Seeds oils and pairings from inventory
 │   └── migrations/
+│       ├── 20260205180547_init/
+│       ├── 20260209073100_rename_usage_pct_to_drops/
+│       └── 20260211064801_add_status_approval_wishlist/
 ├── dev.db                      # SQLite database (at project root)
 ├── src/
 │   ├── lib/
 │   │   ├── components/         # (Shared components as needed)
 │   │   └── server/
 │   │       ├── db.ts           # Prisma client with better-sqlite3 adapter
+│   │       ├── test-helpers.ts # In-memory SQLite test DB factory + seed helpers
 │   │       └── generated/      # Prisma generated client
 │   │           └── prisma/
 │   ├── routes/
 │   │   └── ... (see route structure above)
 │   ├── app.css                 # Global styles, Tailwind imports
 │   ├── app.d.ts
-│   └── app.html
+│   └── app.html                # FontAwesome kit script tag loaded here
 ├── static/
-├── .env                        # ANTHROPIC_API_KEY (when AI assistant added)
+│   ├── manifest.json           # PWA web app manifest
+│   ├── icon.svg                # App icon (SVG, scalable)
+│   ├── icon-192.png            # App icon 192x192
+│   └── icon-512.png            # App icon 512x512
+├── .env                        # Local environment variables (gitignored)
+├── .env.example                # Environment variable template (committed)
 ├── CLAUDE.md
 ├── package.json
 ├── svelte.config.js
@@ -369,14 +425,17 @@ Uses driver adapters instead of direct database connections:
 // src/lib/server/db.ts
 import { PrismaClient } from './generated/prisma/client';
 import { PrismaBetterSqlite3 } from '@prisma/adapter-better-sqlite3';
-import Database from 'better-sqlite3';
+import { env } from '$env/dynamic/private';
 
-const sqlite = new Database('dev.db');
-const adapter = new PrismaBetterSqlite3(sqlite);
-export const db = new PrismaClient({ adapter });
+const dbUrl = env.DATABASE_URL ?? 'file:dev.db';
+const adapter = new PrismaBetterSqlite3({ url: dbUrl });
+
+const globalForPrisma = globalThis as unknown as { prisma: PrismaClient };
+export const db = globalForPrisma.prisma || new PrismaClient({ adapter });
+if (process.env.NODE_ENV !== 'production') globalForPrisma.prisma = db;
 ```
 
-Database file is at project root (`dev.db`), not in the prisma folder. Seed script uses `bunx tsx` (not `bun`) because better-sqlite3 is a native module.
+`DATABASE_URL` is read from environment (defaults to `file:dev.db`). The global singleton pattern prevents connection exhaustion during hot reloads. Seed script uses `bunx tsx` (not `bun`) because better-sqlite3 is a native module.
 
 ### Svelte 5 Patterns
 
@@ -407,37 +466,101 @@ This avoids the stale initial value problem while keeping state mutable for form
 
 Defined in `src/routes/layout.css` using Tailwind v4's `@theme` directive:
 
-- **Colors**: Amber/leather palette using oklch color space
-- **Fonts**: Playfair Display (headings), Inter (body)
-- **Custom classes**: `.btn-vintage`, `.card-glass`, `.fab`, `.diary-entry`
-- **Scent category badges**: `.badge-citrus`, `.badge-woody`, `.badge-herbal`, etc.
+- **Colors**: Amber/leather palette using oklch color space (ink-_, amber-_, copper-_, parchment-_, burgundy-_, sage-_)
+- **Fonts**: Cormorant Garamond (headings via `--font-display`), Crimson Pro (body via `--font-body`)
+- **Custom classes**: `.btn-vintage`, `.btn-outline`, `.v-card`, `.fab`, `.diary-entry`
+- **Scooped corners**: `.scoop`, `.scoop-sm`, `.scoop-xs`, `.scoop-lg` (using `corner-shape: scoop`)
+- **Scent category badges**: `.badge-citrus`, `.badge-woody`, `.badge-herbal`, `.badge-floral`, `.badge-spicy`, `.badge-earthy`, `.badge-resinous`
+- **Status badges**: `.badge-status-untested` (gray), `.badge-status-cottonball` (lavender), `.badge-status-carrier` (sage), `.badge-status-final` (gold)
+- **Ornamental dividers**: `.ornament-line`, `.ornament-divider`, `.divider-vintage`
+- **Animations**: `cardReveal` (staggered card entrance), `fadeInDown`, `glow`, `fadeIn`
+
+### FontAwesome Icons
+
+Loaded via a FontAwesome Kit script in `src/app.html`. The kit includes **Duotone** and **Sharp** icon styles. Always use `fa-duotone fa-solid` prefix for filled icons (e.g., `fa-duotone fa-solid fa-flask-vial`). Do not use basic `fa-regular` or plain `fa-solid` without `fa-duotone` — it produces visually inconsistent single-tone icons.
+
+For toggle states (like the Melissa Approved heart), keep `fa-duotone fa-solid` consistently and vary color/opacity rather than switching between icon families.
+
+### Composite URL Filtering
+
+The formulations list page (`/formulations`) supports multi-dimensional filtering via query params that compose together:
+
+- `?purpose=morning` — filter by time of day
+- `?status=cottonball` — filter by testing pipeline stage
+- `?melissaApproved=true` — show only melissa-approved formulas
+- All three combine: `?purpose=morning&status=final&melissaApproved=true`
+
+The `filterHref()` helper function builds URLs that preserve all active filters when toggling one dimension. It uses manual string building (not `URLSearchParams`) to satisfy the `svelte/prefer-svelte-reactivity` ESLint rule.
+
+### Server-Side Toggle Pattern
+
+For boolean toggles like `melissaApproved`, the server action reads the current value and flips it:
+
+```typescript
+toggleMelissaApproved: async ({ params }) => {
+    const formulation = await db.formulation.findUnique({
+        where: { id: params.id }, select: { melissaApproved: true }
+    });
+    if (!formulation) return fail(404, { error: 'Formula not found' });
+    await db.formulation.update({
+        where: { id: params.id },
+        data: { melissaApproved: !formulation.melissaApproved }
+    });
+    return { success: true };
+},
+```
+
+This avoids relying on client-side state for the toggle value.
+
+### Testing Infrastructure
+
+Tests use in-memory SQLite databases for isolation. The test helper (`src/lib/server/test-helpers.ts`) contains:
+
+- `MIGRATION_SQL`: Inline SQL string that creates all tables — **must be manually updated when the schema changes** (this is not auto-synced with Prisma migrations)
+- `createTestDb()`: Factory function returning a fresh Prisma client backed by in-memory SQLite
+- Seed helpers: `seedCarrierOil()`, `seedEssentialOil()`, `seedFormulation()`, `seedWishlistItem()`, etc.
+
+Test files live alongside their routes as `*.spec.ts` files (e.g., `page.server.spec.ts`).
+
+### ESLint Notes
+
+- `svelte/no-navigation-without-resolve`: Filter links use `filterHref()` which calls `resolve()` internally, but ESLint can't verify this statically. Suppressed with `<!-- eslint-disable -->` blocks matching the existing codebase pattern.
+- `svelte/prefer-svelte-reactivity`: Avoid using `new URLSearchParams()` inside reactive contexts — use manual string building instead.
+- External links (like purchase URLs in wishlist) also need eslint-disable blocks for the navigation-without-resolve rule.
+
 ### Aesthetic Principles
 
 - You tend to converge toward generic, "on distribution" outputs. In frontend design, this creates what users call the "AI slop" aesthetic. Avoid this: make creative, distinctive frontends that surprise and delight. Focus on:
 - **Typography**: Choose fonts that are beautiful, unique, and interesting. Avoid generic fonts like Arial and Inter; opt instead for distinctive choices that elevate the frontend's aesthetics.
 - **Color & Theme**: Commit to a cohesive aesthetic. Use CSS variables for consistency. Dominant colors with sharp accents outperform timid, evenly-distributed palettes. Draw from IDE themes and cultural aesthetics for inspiration.
 - **Motion**: Use animations for effects and micro-interactions. Prioritize CSS-only solutions for HTML. Use Motion library for React when available. Focus on high-impact moments: one well-orchestrated page load with staggered reveals (animation-delay) creates more delight than scattered micro-interactions.
-**Backgrounds**: Create atmosphere and depth rather than defaulting to solid colors. Layer CSS gradients, use geometric patterns, or add contextual effects that match the overall aesthetic.
- 
+  **Backgrounds**: Create atmosphere and depth rather than defaulting to solid colors. Layer CSS gradients, use geometric patterns, or add contextual effects that match the overall aesthetic.
+
 #### Avoid generic AI-generated aesthetics:
+
 - Overused font families (Inter, Roboto, Arial, system fonts)
 - Clichéd color schemes (particularly purple gradients on white backgrounds)
 - Predictable layouts and component patterns
 - Cookie-cutter design that lacks context-specific character
- 
+
 Interpret creatively and make unexpected choices that feel genuinely designed for the context. Vary between light and dark themes, different fonts, different aesthetics. You still tend to converge on common choices (Space Grotesk, for example) across generations. Avoid this: it is critical that you think outside the box!
 
+### Svelte Quirks
+
+- **`class:` directive does not support `/` in class names**: Tailwind opacity syntax like `class:bg-rose-500/20={condition}` causes a Svelte parse error. Use ternary expressions in the `class` attribute string instead: `class="... {condition ? 'bg-rose-500/20' : 'bg-ink-600'}"`.
 
 ### Route Implementation Status
 
-| Route                | Status | Features                                             |
-| -------------------- | ------ | ---------------------------------------------------- |
-| `/` (Dashboard)      | ✓      | Stats, recent formulas, test logs, quick diary entry |
-| `/formulations`      | ✓      | List with purpose filter                             |
-| `/formulations/new`  | ✓      | Create with oil selection                            |
-| `/formulations/[id]` | ✓      | View/edit, oil management, test logs with ratings    |
-| `/oils/carrier`      | ✓      | List, add, edit                                      |
-| `/oils/essential`    | ✓      | List with pairing management                         |
-| `/diary`             | ✓      | Journal entries                                      |
-| `/calculator`        | ✓      | Batch size, oil drops, dilution %, safety indicator  |
-| `/assistant`         | ○      | Not yet implemented                                  |
+| Route                      | Status | Features                                                           |
+| -------------------------- | ------ | ------------------------------------------------------------------ |
+| `/` (Dashboard)            | ✓      | Stats, recent formulas, test logs, quick diary entry               |
+| `/formulations`            | ✓      | List with composite filtering (purpose + status + melissaApproved) |
+| `/formulations/new`        | ✓      | Create with oil selection                                          |
+| `/formulations/[id]`       | ✓      | View/edit, oil management, test logs, status edit, melissa toggle  |
+| `/oils/carrier`            | ✓      | List, add, edit                                                    |
+| `/oils/essential`          | ✓      | List with pairing management                                       |
+| `/oils/essential/wishlist` | ✓      | Wishlist CRUD, priority, purchase tracking                         |
+| `/test/new`                | ✓      | Global quick-add test log with formulation selector                |
+| `/diary`                   | ✓      | Journal entries                                                    |
+| `/calculator`              | ✓      | Batch size, oil drops, dilution %, safety indicator                |
+| `/assistant`               | ○      | Not yet implemented                                                |

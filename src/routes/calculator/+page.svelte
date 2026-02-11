@@ -47,7 +47,7 @@
 		<h1 class="font-display text-2xl font-bold tracking-wide text-parchment-200 lg:text-3xl">
 			Dilution Calculator
 		</h1>
-		<p class="mt-1 font-display text-sm italic text-parchment-600">
+		<p class="mt-1 font-display text-sm text-parchment-600 italic">
 			Calculate essential oil drops for a target dilution. 1-2% is recommended for facial
 			application.
 		</p>
@@ -59,14 +59,7 @@
 			<label for="batchSize" class="mb-1 block text-sm font-medium text-parchment-400">
 				Batch size (ml)
 			</label>
-			<input
-				type="number"
-				id="batchSize"
-				bind:value={batchSize}
-				min="1"
-				max="500"
-				class="w-32"
-			/>
+			<input type="number" id="batchSize" bind:value={batchSize} min="1" max="500" class="w-32" />
 		</div>
 
 		<!-- Oil rows -->
@@ -78,19 +71,8 @@
 		<div class="space-y-3">
 			{#each oils as oil, i (i)}
 				<div class="flex items-center gap-3 rounded-lg bg-ink-600 p-3">
-					<input
-						type="text"
-						bind:value={oils[i].name}
-						placeholder="Oil name"
-						class="min-w-0 flex-1"
-					/>
-					<input
-						type="number"
-						bind:value={oils[i].drops}
-						min="0"
-						max="100"
-						class="w-20 text-center"
-					/>
+					<input type="text" bind:value={oil.name} placeholder="Oil name" class="min-w-0 flex-1" />
+					<input type="number" bind:value={oil.drops} min="0" max="100" class="w-20 text-center" />
 					<span class="text-sm text-parchment-600">drops</span>
 					<span class="w-16 text-right text-sm font-medium text-parchment-400">
 						{oilPercentages[i].percentage.toFixed(2)}%

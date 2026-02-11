@@ -66,7 +66,7 @@
 			<h1 class="font-display text-2xl font-bold tracking-wide text-parchment-200">
 				Essential Oils
 			</h1>
-			<p class="mt-1 font-display text-sm italic text-parchment-600">Your scent library</p>
+			<p class="mt-1 font-display text-sm text-parchment-600 italic">Your scent library</p>
 		</div>
 		<button onclick={() => (showForm = true)} class="btn-vintage">
 			<span class="flex items-center gap-2">
@@ -111,9 +111,7 @@
 					{/if}
 
 					<div>
-						<label for="name" class="mb-1 block text-sm font-medium text-parchment-400"
-							>Name</label
-						>
+						<label for="name" class="mb-1 block text-sm font-medium text-parchment-400">Name</label>
 						<input
 							type="text"
 							id="name"
@@ -126,10 +124,7 @@
 					</div>
 
 					<div>
-						<label
-							for="scentCategory"
-							class="mb-1 block text-sm font-medium text-parchment-400"
-						>
+						<label for="scentCategory" class="mb-1 block text-sm font-medium text-parchment-400">
 							Scent Category
 						</label>
 						<select id="scentCategory" name="scentCategory" class="w-full">
@@ -205,9 +200,7 @@
 						<button type="submit" class="btn-vintage flex-1">
 							{editingOil ? 'Update' : 'Add'} Oil
 						</button>
-						<button type="button" onclick={cancelForm} class="btn-outline flex-1">
-							Cancel
-						</button>
+						<button type="button" onclick={cancelForm} class="btn-outline flex-1"> Cancel </button>
 					</div>
 				</form>
 			</div>
@@ -256,10 +249,7 @@
 					</div>
 
 					<div>
-						<label
-							for="pairingNotes"
-							class="mb-1 block text-sm font-medium text-parchment-400"
-						>
+						<label for="pairingNotes" class="mb-1 block text-sm font-medium text-parchment-400">
 							Notes (optional)
 						</label>
 						<input
@@ -383,9 +373,7 @@
 
 					{#if oil._count.formulations > 0}
 						<p class="mt-2 text-xs text-parchment-700">
-							Used in {oil._count.formulations} formula{oil._count.formulations !== 1
-								? 's'
-								: ''}
+							Used in {oil._count.formulations} formula{oil._count.formulations !== 1 ? 's' : ''}
 						</p>
 					{/if}
 				</div>

@@ -21,6 +21,11 @@
 					title: 'New Formula',
 					href: '/formulations/new' as const,
 					icon: 'fa-duotone fa-solid fa-feather-pointed'
+				},
+				{
+					title: 'Log Test',
+					href: '/test/new' as const,
+					icon: 'fa-duotone fa-solid fa-clipboard-list'
 				}
 			]
 		},

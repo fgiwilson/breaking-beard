@@ -25,10 +25,8 @@
 	<!-- Header -->
 	<div class="flex items-end justify-between">
 		<div>
-			<h1 class="font-display text-2xl font-bold tracking-wide text-parchment-200">
-				Carrier Oils
-			</h1>
-			<p class="mt-1 font-display text-sm italic text-parchment-600">Your base oil inventory</p>
+			<h1 class="font-display text-2xl font-bold tracking-wide text-parchment-200">Carrier Oils</h1>
+			<p class="mt-1 font-display text-sm text-parchment-600 italic">Your base oil inventory</p>
 		</div>
 		<button onclick={() => (showForm = true)} class="btn-vintage">
 			<span class="flex items-center gap-2">
@@ -73,9 +71,7 @@
 					{/if}
 
 					<div>
-						<label for="name" class="mb-1 block text-sm font-medium text-parchment-400"
-							>Name</label
-						>
+						<label for="name" class="mb-1 block text-sm font-medium text-parchment-400">Name</label>
 						<input
 							type="text"
 							id="name"
@@ -89,10 +85,7 @@
 
 					<div class="grid grid-cols-2 gap-4">
 						<div>
-							<label
-								for="comedogenic"
-								class="mb-1 block text-sm font-medium text-parchment-400"
-							>
+							<label for="comedogenic" class="mb-1 block text-sm font-medium text-parchment-400">
 								Comedogenic (0-5)
 							</label>
 							<input
@@ -106,10 +99,7 @@
 							/>
 						</div>
 						<div>
-							<label
-								for="absorption"
-								class="mb-1 block text-sm font-medium text-parchment-400"
-							>
+							<label for="absorption" class="mb-1 block text-sm font-medium text-parchment-400">
 								Absorption
 							</label>
 							<select id="absorption" name="absorption" class="w-full">
@@ -169,9 +159,7 @@
 						<button type="submit" class="btn-vintage flex-1">
 							{editingOil ? 'Update' : 'Add'} Oil
 						</button>
-						<button type="button" onclick={cancelForm} class="btn-outline flex-1">
-							Cancel
-						</button>
+						<button type="button" onclick={cancelForm} class="btn-outline flex-1"> Cancel </button>
 					</div>
 				</form>
 			</div>
@@ -254,9 +242,7 @@
 
 					{#if oil._count.formulations > 0}
 						<p class="mt-2 text-xs text-parchment-700">
-							Used in {oil._count.formulations} formula{oil._count.formulations !== 1
-								? 's'
-								: ''}
+							Used in {oil._count.formulations} formula{oil._count.formulations !== 1 ? 's' : ''}
 						</p>
 					{/if}
 				</div>

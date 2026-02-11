@@ -54,9 +54,7 @@
 		<h1 class="font-display text-2xl font-medium tracking-wide text-parchment-200 lg:text-3xl">
 			The Laboratory
 		</h1>
-		<p class="mt-1 font-display text-sm italic text-parchment-600">
-			An Overview of Your Craft
-		</p>
+		<p class="mt-1 font-display text-sm text-parchment-600 italic">An Overview of Your Craft</p>
 		<div class="ornament-line"></div>
 	</div>
 
@@ -69,7 +67,7 @@
 			<div class="mt-1 font-display text-3xl font-bold text-amber-400">
 				{data.stats.carrierOils}
 			</div>
-			<div class="mt-0.5 text-xs italic text-parchment-700">in the cupboard</div>
+			<div class="mt-0.5 text-xs text-parchment-700 italic">in the cupboard</div>
 		</a>
 		<a href={resolve('/oils/essential')} class="v-card p-4 transition hover:shadow-lg">
 			<div class="text-[0.6rem] font-semibold tracking-[0.15em] text-parchment-600 uppercase">
@@ -78,7 +76,7 @@
 			<div class="mt-1 font-display text-3xl font-bold text-amber-400">
 				{data.stats.essentialOils}
 			</div>
-			<div class="mt-0.5 text-xs italic text-parchment-700">distillations on hand</div>
+			<div class="mt-0.5 text-xs text-parchment-700 italic">distillations on hand</div>
 		</a>
 		<a href={resolve('/formulations')} class="v-card p-4 transition hover:shadow-lg">
 			<div class="text-[0.6rem] font-semibold tracking-[0.15em] text-parchment-600 uppercase">
@@ -87,7 +85,7 @@
 			<div class="mt-1 font-display text-3xl font-bold text-amber-400">
 				{data.stats.formulations}
 			</div>
-			<div class="mt-0.5 text-xs italic text-parchment-700">recipes in the ledger</div>
+			<div class="mt-0.5 text-xs text-parchment-700 italic">recipes in the ledger</div>
 		</a>
 	</div>
 
