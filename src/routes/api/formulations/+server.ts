@@ -5,7 +5,7 @@ import { db } from '$lib/server/db';
 export const POST: RequestHandler = async ({ request }) => {
 	const body = await request.json();
 
-	const { name, purpose, totalVolumeMl, notes, carrierOils, essentialOils } = body;
+	const { name, purpose, status, totalVolumeMl, notes, carrierOils, essentialOils } = body;
 
 	if (!name?.trim()) {
 		return json({ error: 'Name is required' }, { status: 400 });
@@ -19,6 +19,7 @@ export const POST: RequestHandler = async ({ request }) => {
 		data: {
 			name: name.trim(),
 			purpose: purpose || null,
+			status: status || 'not-tested',
 			totalVolumeMl: totalVolumeMl || null,
 			notes: notes || null,
 			carrierOils: {

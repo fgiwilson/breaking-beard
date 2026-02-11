@@ -1,4 +1,12 @@
 {
-	"enabledMcpjsonServers": ["svelte"],
-	"enableAllProjectMcpServers": true
+  "permissions": {
+    "allow": [
+      "mcp__acp__Edit",
+      "mcp__acp__Write"
+    ]
+  },
+  "enableAllProjectMcpServers": true,
+  "enabledMcpjsonServers": [
+    "svelte"
+  ]
 }

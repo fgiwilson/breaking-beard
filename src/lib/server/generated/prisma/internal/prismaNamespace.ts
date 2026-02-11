@@ -391,7 +391,8 @@ export const ModelName = {
   FormulationCarrierOil: 'FormulationCarrierOil',
   FormulationEssentialOil: 'FormulationEssentialOil',
   TestLog: 'TestLog',
-  DiaryEntry: 'DiaryEntry'
+  DiaryEntry: 'DiaryEntry',
+  EssentialOilWishlist: 'EssentialOilWishlist'
 } as const
 
 export type ModelName = (typeof ModelName)[keyof typeof ModelName]
@@ -407,7 +408,7 @@ export type TypeMap<ExtArgs extends runtime.Types.Extensions.InternalArgs = runt
     omit: GlobalOmitOptions
   }
   meta: {
-    modelProps: "carrierOil" | "essentialOil" | "essentialOilPairing" | "formulation" | "formulationCarrierOil" | "formulationEssentialOil" | "testLog" | "diaryEntry"
+    modelProps: "carrierOil" | "essentialOil" | "essentialOilPairing" | "formulation" | "formulationCarrierOil" | "formulationEssentialOil" | "testLog" | "diaryEntry" | "essentialOilWishlist"
     txIsolationLevel: TransactionIsolationLevel
   }
   model: {
@@ -1003,6 +1004,80 @@ export type TypeMap<ExtArgs extends runtime.Types.Extensions.InternalArgs = runt
         }
       }
     }
+    EssentialOilWishlist: {
+      payload: Prisma.$EssentialOilWishlistPayload<ExtArgs>
+      fields: Prisma.EssentialOilWishlistFieldRefs
+      operations: {
+        findUnique: {
+          args: Prisma.EssentialOilWishlistFindUniqueArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$EssentialOilWishlistPayload> | null
+        }
+        findUniqueOrThrow: {
+          args: Prisma.EssentialOilWishlistFindUniqueOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$EssentialOilWishlistPayload>
+        }
+        findFirst: {
+          args: Prisma.EssentialOilWishlistFindFirstArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$EssentialOilWishlistPayload> | null
+        }
+        findFirstOrThrow: {
+          args: Prisma.EssentialOilWishlistFindFirstOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$EssentialOilWishlistPayload>
+        }
+        findMany: {
+          args: Prisma.EssentialOilWishlistFindManyArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$EssentialOilWishlistPayload>[]
+        }
+        create: {
+          args: Prisma.EssentialOilWishlistCreateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$EssentialOilWishlistPayload>
+        }
+        createMany: {
+          args: Prisma.EssentialOilWishlistCreateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        createManyAndReturn: {
+          args: Prisma.EssentialOilWishlistCreateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$EssentialOilWishlistPayload>[]
+        }
+        delete: {
+          args: Prisma.EssentialOilWishlistDeleteArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$EssentialOilWishlistPayload>
+        }
+        update: {
+          args: Prisma.EssentialOilWishlistUpdateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$EssentialOilWishlistPayload>
+        }
+        deleteMany: {
+          args: Prisma.EssentialOilWishlistDeleteManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateMany: {
+          args: Prisma.EssentialOilWishlistUpdateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateManyAndReturn: {
+          args: Prisma.EssentialOilWishlistUpdateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$EssentialOilWishlistPayload>[]
+        }
+        upsert: {
+          args: Prisma.EssentialOilWishlistUpsertArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$EssentialOilWishlistPayload>
+        }
+        aggregate: {
+          args: Prisma.EssentialOilWishlistAggregateArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.AggregateEssentialOilWishlist>
+        }
+        groupBy: {
+          args: Prisma.EssentialOilWishlistGroupByArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.EssentialOilWishlistGroupByOutputType>[]
+        }
+        count: {
+          args: Prisma.EssentialOilWishlistCountArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.EssentialOilWishlistCountAggregateOutputType> | number
+        }
+      }
+    }
   }
 } & {
   other: {
@@ -1084,6 +1159,8 @@ export const FormulationScalarFieldEnum = {
   id: 'id',
   name: 'name',
   purpose: 'purpose',
+  status: 'status',
+  melissaApproved: 'melissaApproved',
   totalVolumeMl: 'totalVolumeMl',
   notes: 'notes',
   createdAt: 'createdAt',
@@ -1137,6 +1214,21 @@ export const DiaryEntryScalarFieldEnum = {
 export type DiaryEntryScalarFieldEnum = (typeof DiaryEntryScalarFieldEnum)[keyof typeof DiaryEntryScalarFieldEnum]
 
 
+export const EssentialOilWishlistScalarFieldEnum = {
+  id: 'id',
+  name: 'name',
+  scentCategory: 'scentCategory',
+  notes: 'notes',
+  priority: 'priority',
+  purchaseUrl: 'purchaseUrl',
+  purchased: 'purchased',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+} as const
+
+export type EssentialOilWishlistScalarFieldEnum = (typeof EssentialOilWishlistScalarFieldEnum)[keyof typeof EssentialOilWishlistScalarFieldEnum]
+
+
 export const SortOrder = {
   asc: 'asc',
   desc: 'desc'
@@ -1177,6 +1269,13 @@ export type IntFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'In
  * Reference to a field of type 'DateTime'
  */
 export type DateTimeFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'DateTime'>
+    
+
+
+/**
+ * Reference to a field of type 'Boolean'
+ */
+export type BooleanFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'Boolean'>
     
 
 
@@ -1289,6 +1388,7 @@ export type GlobalOmitConfig = {
   formulationEssentialOil?: Prisma.FormulationEssentialOilOmit
   testLog?: Prisma.TestLogOmit
   diaryEntry?: Prisma.DiaryEntryOmit
+  essentialOilWishlist?: Prisma.EssentialOilWishlistOmit
 }
 
 /* Types for Logging */
