@@ -54,7 +54,7 @@
 		if (melissa) parts.push('melissaApproved=true');
 
 		const qs = parts.join('&');
-		return resolve(`/formulations${qs ? `?${qs}` : ''}`);
+		return qs ? `${resolve('/formulations')}?${qs}` : resolve('/formulations');
 	}
 
 	function formatDate(date: Date | string): string {

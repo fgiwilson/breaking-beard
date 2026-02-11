@@ -29,7 +29,7 @@ describe('Test log new — load', () => {
 		await seedFormulation(testDb, { name: 'Beta' });
 
 		const { load } = await import('./+page.server');
-		const result = await load({ url: mockUrl() } as any);
+		const result = (await load({ url: mockUrl() } as any))!;
 
 		expect(result.formulations).toHaveLength(2);
 		expect(result.formulations[0]).toHaveProperty('name');
@@ -39,7 +39,7 @@ describe('Test log new — load', () => {
 
 	it('returns empty array when no formulations exist', async () => {
 		const { load } = await import('./+page.server');
-		const result = await load({ url: mockUrl() } as any);
+		const result = (await load({ url: mockUrl() } as any))!;
 
 		expect(result.formulations).toEqual([]);
 	});
@@ -48,16 +48,16 @@ describe('Test log new — load', () => {
 		const formula = await seedFormulation(testDb, { name: 'Target' });
 
 		const { load } = await import('./+page.server');
-		const result = await load({
+		const result = (await load({
 			url: mockUrl({ formulation: formula.id })
-		} as any);
+		} as any))!;
 
 		expect(result.preselected).toBe(formula.id);
 	});
 
 	it('returns null preselected when no query param', async () => {
 		const { load } = await import('./+page.server');
-		const result = await load({ url: mockUrl() } as any);
+		const result = (await load({ url: mockUrl() } as any))!;
 
 		expect(result.preselected).toBeNull();
 	});
