@@ -70,7 +70,7 @@ html {
 	font-family: var(--font-body);
 	background: var(--color-ink-800);
 	color: var(--color-parchment-400);
-	font-size: 16px;
+	font-size: 17px;
 }
 
 /* Subtle noise texture for depth */

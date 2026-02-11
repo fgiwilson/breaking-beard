@@ -197,21 +197,21 @@
 							<div class="mt-1 flex flex-wrap gap-2 text-xs">
 								{#if oil.absorption}
 									<span
-										class="scoop-sm border border-amber-500/15 bg-ink-600 px-2 py-0.5 text-parchment-500"
+										class="rounded-md border border-amber-500/15 bg-ink-600 px-2 py-0.5 text-parchment-500"
 									>
 										{oil.absorption} absorption
 									</span>
 								{/if}
 								{#if oil.texture}
 									<span
-										class="scoop-sm border border-amber-500/15 bg-ink-600 px-2 py-0.5 text-parchment-500"
+										class="rounded-md border border-amber-500/15 bg-ink-600 px-2 py-0.5 text-parchment-500"
 									>
 										{oil.texture} texture
 									</span>
 								{/if}
 								{#if oil.comedogenic !== null}
 									<span
-										class="scoop-sm border border-amber-500/15 bg-ink-600 px-2 py-0.5 text-parchment-500"
+										class="rounded-md border border-amber-500/15 bg-ink-600 px-2 py-0.5 text-parchment-500"
 									>
 										comedogenic: {oil.comedogenic}
 									</span>
