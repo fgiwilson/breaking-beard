@@ -1,7 +1,7 @@
 {
 	"name": "breaking-beard",
 	"private": true,
-	"version": "0.0.1",
+	"version": "0.1.5",
 	"type": "module",
 	"engines": {
 		"node": ">=24"

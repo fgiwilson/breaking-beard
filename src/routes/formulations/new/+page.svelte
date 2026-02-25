@@ -276,7 +276,7 @@
 			</div>
 
 			<p class="mt-3 text-xs text-parchment-600">
-				Tip: For a 30ml bottle, 6-9 drops total gives ~1% dilution (safe for face)
+				Tip: For a 30ml bottle, 12-18 drops total gives ~1% dilution (safe for face)
 			</p>
 		</div>
 

@@ -1,4 +1,6 @@
 <script lang="ts">
+	import { ML_PER_DROP } from '$lib/drops';
+
 	let batchSize = $state(30);
 
 	let oils = $state<Array<{ name: string; drops: number }>>([{ name: '', drops: 1 }]);
@@ -7,13 +9,13 @@
 	let oilPercentages = $derived(
 		oils.map((oil) => ({
 			...oil,
-			percentage: batchSize > 0 ? ((oil.drops * 0.05) / batchSize) * 100 : 0
+			percentage: batchSize > 0 ? ((oil.drops * ML_PER_DROP) / batchSize) * 100 : 0
 		}))
 	);
 
 	// Totals
 	let totalDrops = $derived(oils.reduce((sum, o) => sum + o.drops, 0));
-	let totalEoVolumeMl = $derived(totalDrops * 0.05);
+	let totalEoVolumeMl = $derived(totalDrops * ML_PER_DROP);
 	let totalDilutionPct = $derived(batchSize > 0 ? (totalEoVolumeMl / batchSize) * 100 : 0);
 	let carrierVolumeMl = $derived(Math.max(0, batchSize - totalEoVolumeMl));
 

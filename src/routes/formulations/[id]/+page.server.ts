@@ -1,6 +1,7 @@
 import type { PageServerLoad, Actions } from './$types';
 import { db } from '$lib/server/db';
 import { error, fail } from '@sveltejs/kit';
+import { ML_PER_DROP } from '$lib/drops';
 
 export const load: PageServerLoad = async ({ params }) => {
 	const formulation = await db.formulation.findUnique({
@@ -130,7 +131,7 @@ export const actions: Actions = {
 						essentialOilId: eo.id,
 						drops: eo.drops,
 						percentage: formulation?.totalVolumeMl
-							? ((eo.drops * 0.05) / formulation.totalVolumeMl) * 100
+							? ((eo.drops * ML_PER_DROP) / formulation.totalVolumeMl) * 100
 							: null
 					}))
 			});

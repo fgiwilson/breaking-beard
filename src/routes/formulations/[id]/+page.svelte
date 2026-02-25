@@ -3,6 +3,7 @@
 	import { goto } from '$app/navigation';
 	import { resolve } from '$app/paths';
 	import type { PageProps } from './$types';
+	import { ML_PER_DROP } from '$lib/drops';
 
 	let { data }: PageProps = $props();
 
@@ -54,7 +55,7 @@
 	let totalDrops = $derived(selectedEssentials.reduce((sum, e) => sum + e.drops, 0));
 	let totalEoPct = $derived(
 		data.formulation.totalVolumeMl
-			? ((totalDrops * 0.05) / data.formulation.totalVolumeMl) * 100
+			? ((totalDrops * ML_PER_DROP) / data.formulation.totalVolumeMl) * 100
 			: 0
 	);
 
@@ -559,7 +560,7 @@
 						(sum, eo) => sum + (eo.drops ?? 0),
 						0
 					)}
-					{@const totalPct = ((totalDropsDisplay * 0.05) / data.formulation.totalVolumeMl) * 100}
+					{@const totalPct = ((totalDropsDisplay * ML_PER_DROP) / data.formulation.totalVolumeMl) * 100}
 					<div class="ornament-divider mt-3">&mdash;&#10022;&mdash;</div>
 					<p class="text-center text-xs text-parchment-600">
 						{totalDropsDisplay} drops total = ~{totalPct.toFixed(1)}% dilution

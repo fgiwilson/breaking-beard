@@ -76,8 +76,8 @@ describe('POST /api/formulations', () => {
 			where: { formulationId: body.id }
 		});
 
-		// (6 * 0.05 / 30) * 100 = 1.0%
-		expect(eos[0].percentage).toBeCloseTo(1.0);
+		// (6 * 0.025 / 30) * 100 = 0.5%
+		expect(eos[0].percentage).toBeCloseTo(0.5);
 	});
 
 	it('sets percentage to null when no totalVolumeMl', async () => {

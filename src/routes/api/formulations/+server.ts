@@ -1,6 +1,7 @@
 import { json } from '@sveltejs/kit';
 import type { RequestHandler } from './$types';
 import { db } from '$lib/server/db';
+import { ML_PER_DROP } from '$lib/drops';
 
 export const POST: RequestHandler = async ({ request }) => {
 	const body = await request.json();
@@ -36,7 +37,7 @@ export const POST: RequestHandler = async ({ request }) => {
 							essentialOilId: eo.id,
 							drops: eo.drops,
 							// Calculate percentage based on drops and batch size
-							percentage: totalVolumeMl ? ((eo.drops * 0.05) / totalVolumeMl) * 100 : null
+							percentage: totalVolumeMl ? ((eo.drops * ML_PER_DROP) / totalVolumeMl) * 100 : null
 						})) ?? []
 			}
 		}

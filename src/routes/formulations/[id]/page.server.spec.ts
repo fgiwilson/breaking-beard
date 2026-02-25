@@ -309,8 +309,8 @@ describe('Formulation updateOils action', () => {
 		});
 		expect(eos).toHaveLength(1);
 		expect(eos[0].drops).toBe(6);
-		// Formula: (6 * 0.05 / 30) * 100 = 1.0
-		expect(eos[0].percentage).toBeCloseTo(1.0);
+		// Formula: (6 * 0.025 / 30) * 100 = 0.5
+		expect(eos[0].percentage).toBeCloseTo(0.5);
 	});
 
 	it('sets percentage to null when totalVolumeMl is not set', async () => {
